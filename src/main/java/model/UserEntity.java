@@ -7,7 +7,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "user", schema = "seriesdiscuss", catalog = "")
+@Table(name = "user", schema = "seriesdiscuss")
 public class UserEntity implements Serializable {
     private long idUser;
     private String forename;
