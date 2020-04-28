@@ -1,4 +1,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <param name="FlashVars" value="${fn:escapeXml(flashVars)}" />
 <%@ page contentType="text/html;charset=utf-8" %>
 
@@ -15,7 +16,7 @@
 <body>
 <p style="text-align: right">
 <input name="s" placeholder="Искать здесь..." type="search" >
-<button type="submit"><img src="../images/loupe.png"
+<button type="submit"><img src="/images/loupe.png"
                            style="vertical-align: middle"></button>
 </body>
 </html>
@@ -23,7 +24,8 @@
 <html>
 <body>
 <p style="horiz-align: center">
-<img src="../images/lion.png">
+
+    <img src="<spring:url value="../images/lion.png"/>">
 </body>
 </html>
 

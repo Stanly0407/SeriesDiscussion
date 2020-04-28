@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,13 +11,13 @@ import service.SeriesServiceImpl;
 
 @Controller
 public class SeriesController {
-    public SeriesService seriesService = new SeriesServiceImpl();
+     SeriesServiceImpl seriesService = new SeriesServiceImpl();
 
-//    @Autowired(required = true)
-//    @Qualifier(value = "seriesService")
-//    public void setSeriesService(SeriesService seriesService) {
-//        this.seriesService = seriesService;
-//    }
+    @Autowired(required = true)
+    @Qualifier(value = "seriesServiceImpl")
+    public void setSeriesService(SeriesService seriesService) {
+        this.seriesService = (SeriesServiceImpl) seriesService;
+    }
 
     @RequestMapping(value="/", method= RequestMethod.GET)
     public String getHomePage() {

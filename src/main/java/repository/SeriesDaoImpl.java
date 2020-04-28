@@ -1,12 +1,16 @@
-package dao;
+package repository;
 
 import model.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+import utilHibernate.HibConfig;
 
 import java.util.List;
 
+@Repository
 public class SeriesDaoImpl implements SeriesDao {
+//private static final Logger logger = LoggerFactory.getLogger(SeriesDaoImpl);
 
     public SeriesDaoImpl() {
     }

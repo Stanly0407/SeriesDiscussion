@@ -1,4 +1,4 @@
-package dao;
+package utilHibernate;
 
 import model.*;
 import org.hibernate.SessionFactory;

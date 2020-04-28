@@ -1,7 +1,7 @@
 package service;
 
-import dao.SeriesDao;
-import dao.SeriesDaoImpl;
+import repository.SeriesDao;
+import repository.SeriesDaoImpl;
 import model.SeriesEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +10,8 @@ import java.util.List;
 
 @Service
 public class SeriesServiceImpl implements SeriesService {
-    private SeriesDao seriesDao = new SeriesDaoImpl();
+
+     private SeriesDao seriesDao = new SeriesDaoImpl();
 
     @Override
     @Transactional
