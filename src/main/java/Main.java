@@ -1,4 +1,5 @@
 
+import model.CommentSeriesEntity;
 import model.SeriesEntity;
 import service.SeriesService;
 import service.SeriesServiceImpl;
@@ -15,9 +16,13 @@ public class Main {
         seriesService.addSeries(series);
         System.out.println(series + "\n");
 
-        seriesService.removeSeries(15);
+        seriesService.removeSeries(16);
 
         System.out.println(seriesService.getSeriesByID(1));
+
+
+
+
 
     }
 }

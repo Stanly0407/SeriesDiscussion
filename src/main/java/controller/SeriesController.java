@@ -23,5 +23,6 @@ public class SeriesController {
     public String getHomePage() {
         return "homePage";}
 
-    //@RequestMapping(value = "")
+    //@RequestMapping(value = "homePage", method= RequestMethod.GET)
+   // public String
 }

@@ -13,6 +13,20 @@
 </html>
 
 <html>
+<head>
+    <a href="admin.jsp"/>
+</head>
+<body>
+<p style="text-align: center; color: grey">
+    <button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"> Admin </button>
+</p>
+</body>
+</html>
+
+
+
+
+<html>
 <body>
 <p style="text-align: right">
 <input name="s" placeholder="Искать здесь..." type="search" >
