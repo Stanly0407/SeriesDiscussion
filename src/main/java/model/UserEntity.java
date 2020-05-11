@@ -14,8 +14,9 @@ public class UserEntity implements Serializable {
     private String surname;
     private String email;
     private String password;
-    private long rateUser;
+    private long rateUser = 0;
     private LocalDate birthdate;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,6 +93,23 @@ public class UserEntity implements Serializable {
 
     public UserEntity(long idUser, String forename, String surname, String email, String password, Long rateUser, LocalDate birthdate) {
         this.idUser = idUser;
+        this.forename = forename;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.rateUser = rateUser;
+        this.birthdate = birthdate;
+    }
+
+    public UserEntity(String forename, String surname, String email, String password, LocalDate birthdate) {
+        this.forename = forename;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.birthdate = birthdate;
+    }
+
+    public UserEntity(String forename, String surname, String email, String password, long rateUser, LocalDate birthdate) {
         this.forename = forename;
         this.surname = surname;
         this.email = email;

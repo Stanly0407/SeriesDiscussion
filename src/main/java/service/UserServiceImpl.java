@@ -1,8 +1,10 @@
 package service;
 
 import model.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 import repository.UserDao;
 import repository.UserDaoImpl;
 
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private Validator validator;
 
     private UserDao userDao = new UserDaoImpl();
 

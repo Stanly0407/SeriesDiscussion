@@ -1,18 +1,27 @@
 package config;
 
-//Далее нужно создать класс: WebConfig в который мы добавим ViewResolver
-// — пропишем наши суффикс и префикс для вьюшек
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.CacheControl;
+import org.springframework.lang.Nullable;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
+import javax.servlet.FilterRegistration;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -25,6 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/");
         resolver.setSuffix(".jsp");
+        resolver.setContentType("text/html;charset=utf8");
         return resolver;
     }
 
@@ -38,6 +48,27 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/")
                 .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
     }
+
+    @Bean
+    public FormattingConversionService conversionService() {
+        DefaultFormattingConversionService conversionService =
+                new DefaultFormattingConversionService(false);
+
+        DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+        registrar.setDateFormatter(DateTimeFormatter.ofPattern("dd-mm-yyyy"));
+        registrar.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        registrar.registerFormatters(conversionService);
+
+        // other desired formatters
+
+        return conversionService;
+    }
+
+
+
+
+
+
 
 }
 
