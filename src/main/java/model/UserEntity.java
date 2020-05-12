@@ -1,5 +1,7 @@
 package model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,18 +11,36 @@ import java.util.Objects;
 @Entity
 @Table(name = "user", schema = "seriesdiscuss")
 public class UserEntity implements Serializable {
-    private long idUser;
-    private String forename;
-    private String surname;
-    private String email;
-    private String password;
-    private long rateUser = 0;
-    private LocalDate birthdate;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user", nullable = false)
+    private long idUser;
+
+    @Basic
+    @Column(name = "forename", nullable = true, length = 255)
+    private String forename;
+
+    @Basic
+    @Column(name = "surname", nullable = true, length = 255)
+    private String surname;
+
+    @Basic
+    @Column(name = "email", nullable = true, length = 255)
+    private String email;
+
+    @Basic
+    @Column(name = "password", nullable = true, length = 255)
+    private String password;
+
+    @Basic
+    @Column(name = "rate_user", nullable = true)
+    private long rateUser = 0;
+
+    @Basic
+    @Column(name = "birthdate", nullable = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthdate;
+
     public long getIdUser() {
         return idUser;
     }
@@ -29,8 +49,6 @@ public class UserEntity implements Serializable {
         this.idUser = idUser;
     }
 
-    @Basic
-    @Column(name = "forename", nullable = true, length = 255)
     public String getForename() {
         return forename;
     }
@@ -39,8 +57,6 @@ public class UserEntity implements Serializable {
         this.forename = forename;
     }
 
-    @Basic
-    @Column(name = "surname", nullable = true, length = 255)
     public String getSurname() {
         return surname;
     }
@@ -49,8 +65,6 @@ public class UserEntity implements Serializable {
         this.surname = surname;
     }
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 255)
     public String getEmail() {
         return email;
     }
@@ -59,8 +73,6 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "password", nullable = true, length = 255)
     public String getPassword() {
         return password;
     }
@@ -69,8 +81,6 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "rate_user", nullable = true)
     public Long getRateUser() {
         return rateUser;
     }
@@ -79,8 +89,6 @@ public class UserEntity implements Serializable {
         this.rateUser = rateUser;
     }
 
-    @Basic
-    @Column(name = "birthdate", nullable = true)
     public LocalDate getBirthdate() {
         return birthdate;
     }

@@ -38,16 +38,17 @@ public class SeriesDiscussController {
     public String getRegistrationPage() {
         return "registration";}
 
-    @PostMapping(value = "newRegistration", produces = MediaType.TEXT_PLAIN_VALUE +"; charset=utf8")
-    public String registrationOfUser(@ModelAttribute("user") UserEntity user
-         //   ,
-         //      @RequestParam("start")
-         //  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-         //        LocalDate date
-    ){   if (user.getIdUser() == 0){
+
+        //ИСПРАВИТЬ УСЛОВНЫЙ ОПЕРАТОР!
+    @PostMapping(value = "newRegistration", produces = MediaType.TEXT_PLAIN_VALUE + "; charset=utf-8")
+    public String registrationOfUser(@ModelAttribute("user") UserEntity user)
+    {if (userService.checkUserForm(user)) {
+        return "registrationCheckForm";}
+    else if (userService.checkUser(user.getEmail())) {
         userService.addUser(user);
-        return "homePageSuccessfully";
-    }else {
-        return "authentication"; }}
+        return "homePageSuccessfully"; }
+    else {
+        return "authentication"; }
+    }
 
 }

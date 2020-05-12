@@ -12,4 +12,6 @@ public interface UserDao {
     public UserEntity getUserByID(long idUser);
     public List<UserEntity> listUsers();
     public boolean checkUser (String email);
+
+
 }

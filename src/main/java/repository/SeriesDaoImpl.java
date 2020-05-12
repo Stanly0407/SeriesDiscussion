@@ -56,9 +56,9 @@ public class SeriesDaoImpl implements SeriesDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<SeriesEntity> listSeries() {
-        Session session = HibConfig.getSessionFactory().getCurrentSession();
+        Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<SeriesEntity> seriesList = session.createQuery("from series").list();
+        List<SeriesEntity> seriesList = session.createQuery("from SeriesEntity").list();
 
 //        for (SeriesEntity series: seriesList){
 //             logger.info("Series list: " + series);

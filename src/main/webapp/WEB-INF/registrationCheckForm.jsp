@@ -37,6 +37,10 @@
     </p>
 </form>
 
+<p style="text-align: center; color: red">
+    Заполните все поля, проверьте правильность ввода данных.
+</p>
+
 </body>
 
 </html>

@@ -4,10 +4,12 @@ package repository;
 import model.UserEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import utilHibernate.HibConfig;
 
 import java.util.List;
+
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -47,7 +49,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserEntity getUserByID(long idUser) {
-        Session session = HibConfig.getSessionFactory().getCurrentSession();
+        Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         UserEntity user = session.load(UserEntity.class, idUser);
         return user;
@@ -56,9 +58,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<UserEntity> listUsers() {
-        Session session = HibConfig.getSessionFactory().getCurrentSession();
+        Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<UserEntity> userList = session.createQuery("from user").list();
+        List<UserEntity> userList = session.createQuery("from UserEntity").list();
 
 //        for (SeriesEntity series: seriesList){
 //             logger.info("Series list: " + series);}
@@ -66,13 +68,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean checkUser(String email) {
-        Session session = HibConfig.getSessionFactory().getCurrentSession();
+        Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        UserEntity user = session.load(UserEntity.class, email);
-        if (user != null) {
+        String hql = "FROM UserEntity u where u.email = :paramEmail";
+        Query query = session.createQuery(hql);
+        query.setParameter("paramEmail", email);
+        List<UserEntity> list = query.list();
+
+        if (list == null) {
             return true;
         } else {
             return false;}
     }
+
+
 }
