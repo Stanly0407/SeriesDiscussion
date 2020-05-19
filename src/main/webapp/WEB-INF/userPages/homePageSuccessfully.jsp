@@ -6,12 +6,12 @@
 <html>
 <head>
     <title>Сериалы тут!</title>
-    <link rel="shortcut icon"  type="ico/png" href="images/favicon.ico">
+    <link rel="shortcut icon"  type="ico/png" href="../images/favicon.ico">
 </head>
 <body>
 <p style="text-align: right">
-    <button><a href="registration"> Регистрация </a></button>
-    <button> <a href="authentication"> Вход </a>  </button>  </p>
+    <button><a href="registration"> Личный кабинет </a></button>
+    <button> <a href="authentication"> Выход </a>  </button>  </p>
 </p>
 </body>
 

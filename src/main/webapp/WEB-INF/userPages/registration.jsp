@@ -2,13 +2,17 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--<param name="FlashVars" value="${fn:escapeXml(flashVars)}" />--%>
 <%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-
+<%@page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="page" tagdir="/WEB-INF/tags" %>
 
 <html>
-
+<head>
+    <link rel="shortcut icon"  type="ico" href="../images/favicon.ico">
+</head>
 
 <body style="background-color: cadetblue; ">
 <h2 style="color: darkslategray; size: 12px; text-align: center; font-weight: bolder "> Регистрация </h2>

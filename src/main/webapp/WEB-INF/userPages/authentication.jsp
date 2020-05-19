@@ -25,10 +25,10 @@
     <p style="text-align: center;">
         <button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"> OK</button>
     </p>
-    <a href="registrationPage.jsp"/>
+
 </form>
 
-<p style="text-align: center;"> <a href="registrationPage.jsp">Registration </a> </p>
+<p style="text-align: center;"> <a href="../userPages/registration.jsp">Registration </a> </p>
 
 </body>
 </html>

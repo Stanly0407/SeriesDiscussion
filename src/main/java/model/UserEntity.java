@@ -34,7 +34,7 @@ public class UserEntity implements Serializable {
 
     @Basic
     @Column(name = "rate_user", nullable = true)
-    private long rateUser = 0;
+    private Long rateUser = 0L;
 
     @Basic
     @Column(name = "birthdate", nullable = true)
@@ -109,6 +109,11 @@ public class UserEntity implements Serializable {
         this.birthdate = birthdate;
     }
 
+    public UserEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public UserEntity(String forename, String surname, String email, String password, LocalDate birthdate) {
         this.forename = forename;
         this.surname = surname;
@@ -117,7 +122,7 @@ public class UserEntity implements Serializable {
         this.birthdate = birthdate;
     }
 
-    public UserEntity(String forename, String surname, String email, String password, long rateUser, LocalDate birthdate) {
+    public UserEntity(String forename, String surname, String email, String password, Long rateUser, LocalDate birthdate) {
         this.forename = forename;
         this.surname = surname;
         this.email = email;

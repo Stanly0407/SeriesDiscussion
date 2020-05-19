@@ -49,8 +49,7 @@ public class SeriesDaoImpl implements SeriesDao {
     public SeriesEntity getSeriesByID(long idSeries) {
         Session session = HibConfig.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        SeriesEntity series = session.load(SeriesEntity.class, idSeries);
-        return series;
+        return session.load(SeriesEntity.class, idSeries);
     }
 
     @Override
@@ -58,12 +57,11 @@ public class SeriesDaoImpl implements SeriesDao {
     public List<SeriesEntity> listSeries() {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        List<SeriesEntity> seriesList = session.createQuery("from SeriesEntity").list();
 
 //        for (SeriesEntity series: seriesList){
 //             logger.info("Series list: " + series);
 //        }
-        return seriesList;
+        return (List<SeriesEntity>) session.createQuery("from SeriesEntity").list();
     }
 }
 

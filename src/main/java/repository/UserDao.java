@@ -11,7 +11,9 @@ public interface UserDao {
     public void removeUser(long idUser);
     public UserEntity getUserByID(long idUser);
     public List<UserEntity> listUsers();
-    public boolean checkUser (String email);
-
-
+    public boolean checkUserReg (String email);
+    public boolean checkUserAuthen(String email, String password);
+    public boolean checkAdminAuthen(UserEntity user);
+    public void blockingUser(long idUser);
+    public void unBlockingUser(long idUser);
 }

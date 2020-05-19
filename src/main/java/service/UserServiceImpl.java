@@ -52,18 +52,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean checkUser(String email) {
-        return userDao.checkUser(email);
+    public boolean checkUserReg(String email) {
+        return userDao.checkUserReg(email);
     }
 
-    //  @Override
-    public boolean checkUserForm(UserEntity user) {
-        if (user.getEmail() == null || user.getSurname() == null ||
-                user.getForename() == null || user.getPassword() == null ||
-                user.getBirthdate() == null) {
-            return false;
-        } else {
-            return true;
-        }
+    @Override
+    public boolean checkUserAuthen(String email, String password) {
+        return userDao.checkUserAuthen(email, password);
     }
+
+
+
+    @Override
+    public boolean checkUserForm(UserEntity user) {
+        return user.getEmail() == null || user.getSurname() == null ||
+                user.getForename() == null || user.getPassword() == null ||
+                user.getBirthdate() == null;
+    }
+
+    @Override
+    public boolean checkUserAuthenForm(UserEntity user){
+        return user.getEmail() == null || user.getPassword() == null;
+    }
+
+    @Override
+    public boolean checkAdminAuthen(UserEntity user) {
+        return userDao.checkAdminAuthen(user);
+    }
+
+    @Override
+    public void blockingUser(long idUser) {
+         userDao.blockingUser(idUser);
+    }
+
+    @Override
+    public void unBlockingUser(long idUser) {
+        userDao.unBlockingUser(idUser);
+    }
+
+
 }
+
