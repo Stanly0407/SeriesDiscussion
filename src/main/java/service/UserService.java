@@ -6,16 +6,31 @@ import model.UserEntity;
 import java.util.List;
 
 public interface UserService {
-    public void addUser(UserEntity user);
-    public void updateUser(UserEntity user);
-    public void removeUser(long idUser);
-    public UserEntity getUserByID(long idUser);
-    public List<UserEntity> listUsers();
-    public boolean checkUserReg (String email);
-    public boolean checkUserAuthen(String email, String password);
-    public boolean checkUserForm(UserEntity user);
-    public boolean checkUserAuthenForm(UserEntity user);
-    public boolean checkAdminAuthen(UserEntity user);
-    public void blockingUser(long idUser);
-    public void unBlockingUser(long idUser);
+    void addUser(UserEntity user);
+
+    void updateUser(UserEntity user);
+
+    void removeUser(long idUser);
+
+    UserEntity getUserByID(long idUser);
+
+    List<UserEntity> listUsers();
+
+    boolean checkUserReg(String email);
+
+    boolean checkUserAuthen(String email, String password);
+
+    boolean checkUserForm(UserEntity user);
+
+    boolean checkUserAuthenForm(UserEntity user);
+
+    boolean checkAdminAuthen(UserEntity user);
+
+    void blockingUser(long idUser);
+
+    void unBlockingUser(long idUser);
+
+    void evictUser(UserEntity user);
+
+    boolean blockingUserCheck(UserEntity user);
 }

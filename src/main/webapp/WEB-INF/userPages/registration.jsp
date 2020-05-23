@@ -30,7 +30,9 @@
         <input type="text" size="40" name="email">
     </p>
     <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Пароль</b><br>
-        <input type="text" size="40" name="password">
+        <input type="password" size="40" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+               title="Должен содержать не менее одной цифры и
+         одной заглавной и строчной буквы и не менее 8 или более символов" required>
     </p>
     <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Дата рождения</b><br>
         <input type="date"  name="birthdate"

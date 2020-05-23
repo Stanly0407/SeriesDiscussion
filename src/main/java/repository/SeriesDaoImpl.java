@@ -48,7 +48,7 @@ public class SeriesDaoImpl implements SeriesDao {
     @Override
     public SeriesEntity getSeriesByID(long idSeries) {
         Session session = HibConfig.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+//        Transaction transaction = session.beginTransaction();
         return session.load(SeriesEntity.class, idSeries);
     }
 

@@ -16,10 +16,7 @@
     <img src="<spring:url value="../images/lion.png"/>">
 
 <body>
-
-
 <h1>Список пользователей:</h1>
-
 
 <c:if test="${not empty listUsers}">
 <table>
@@ -34,8 +31,7 @@
         <th width="80"></th>
         <th width="80"></th>
         <th width="80"></th>
-        <th width="200" style="color: red">ВНИМАНИЕ! Крайняя блокировка! Приведет к удалению всех отзывов и комментариев пользователя!</th>
-    </tr>
+        </tr>
     <c:forEach items="${listUsers}" var="user">
         <tr>
             <td>${user.idUser}</td>
@@ -49,7 +45,7 @@
             <td><a href="<c:url value='/blockingUser/${user.idUser}'/>">Заблокировать</a></td>
             <td><a href="<c:url value='/unBlockingUser/${user.idUser}'/>">Разблокировать</a></td>
             <td ><a href="<c:url value='/edit/${user.idUser}'/>">Редактировать</a></td>
-            <td style="color: red"><a href="<c:url value="/remove/${user.idUser}"/>">Удалить</a></td>
+<%--            <td style="color: red"><a href="<c:url value="/remove/${user.idUser}"/>">Удалить</a></td>--%>
             </form>
         </tr>
     </c:forEach>

@@ -38,6 +38,19 @@ public class UserServiceImpl implements UserService {
         userDao.removeUser(idUser);
     }
 
+
+    @Override
+    @Transactional
+    public void evictUser(UserEntity user){
+         userDao.evictUser(user);
+    }
+
+    @Override
+    public boolean blockingUserCheck(UserEntity user) {
+        return userDao.blockingUserCheck(user);
+    }
+
+
     @Override
     @Transactional
     public UserEntity getUserByID(long idUser) {
@@ -60,8 +73,6 @@ public class UserServiceImpl implements UserService {
     public boolean checkUserAuthen(String email, String password) {
         return userDao.checkUserAuthen(email, password);
     }
-
-
 
     @Override
     public boolean checkUserForm(UserEntity user) {

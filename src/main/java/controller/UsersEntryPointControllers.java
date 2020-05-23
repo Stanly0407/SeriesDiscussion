@@ -15,7 +15,7 @@ import service.UserServiceImpl;
 
 
 @Controller
-public class UsersController {
+public class UsersEntryPointControllers {
     SeriesServiceImpl seriesService = new SeriesServiceImpl();
     UserServiceImpl userService = new UserServiceImpl();
 
@@ -25,6 +25,7 @@ public class UsersController {
     public void setSeriesService(SeriesService seriesService) {
         this.seriesService = (SeriesServiceImpl) seriesService;
     }
+
     @Autowired(required = true)
     @Qualifier(value = "userServiceImpl")
     public void setUserService(UserService userService) {
@@ -64,10 +65,11 @@ public class UsersController {
     public String authenticationOfUser(@ModelAttribute("user") UserEntity user) {
         if (userService.checkUserAuthenForm(user)) {
             return "userPages/authentication";
-        }
-        else if (userService.checkAdminAuthen(user)) {
+        } else if (userService.checkAdminAuthen(user)) {
             return "adminPages/adminMainPage";
-      }
+        } else if (userService.blockingUserCheck(user)){
+            return "userPages/userBlockedInfoPage";
+        }
         else if (userService.checkUserAuthen(user.getEmail(), user.getPassword())) {
             return "userPages/homePageSuccessfully";
         } else {
@@ -75,40 +77,10 @@ public class UsersController {
         }
     }
 
-    @GetMapping(value = "adminUsersInfoList")
- //   public ModelAndView listUsers() {
-    // return new ModelAndView("redirect: /adminPages/adminMainPage", "listUsers", userService.listUsers());
 
-        public String listUsers(Model model) {         // button "Список пользователей"
-        System.out.println(userService.listUsers());
-        model.addAttribute("user", new UserEntity());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-
-       }
-
-
-    @RequestMapping("/remove/{idUser}")
-    public String removeUser(@PathVariable("idUser") long idUser, Model model) {
-        userService.removeUser(idUser);
-        model.addAttribute("user", new UserEntity());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-    }
-
-    @GetMapping("/blockingUser/{idUser}")
-     public String blockingUser (@PathVariable("idUser") long idUser, Model model) {
-        userService.blockingUser(idUser);
-        model.addAttribute("user", new UserEntity());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-    }
-    @GetMapping("/unBlockingUser/{idUser}")
-    public String unBlockingUser(@PathVariable("idUser") long idUser, Model model) {
-        userService.unBlockingUser(idUser);
-        model.addAttribute("user", new UserEntity());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-    }
 
 }
+
+
+
+

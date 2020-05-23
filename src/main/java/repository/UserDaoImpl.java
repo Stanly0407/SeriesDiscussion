@@ -22,8 +22,8 @@ public class UserDaoImpl implements UserDao {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.persist(user);
-        transaction.commit();
-        session.close();
+      transaction.commit();
+       session.close();
     }
 
     @Override
@@ -35,17 +35,14 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
+
     @Override
-    public void removeUser(long idUser) {
+    public void evictUser(UserEntity user) {
         Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        UserEntity user = session.load(UserEntity.class, idUser);
-        if (user != null) {
-            session.delete((user));
-        }
-        transaction.commit();
-        session.close();
+        Transaction transaction = session.getTransaction();
+        session.evict(user);
     }
+
 
     @Override
     public UserEntity getUserByID(long idUser) {
@@ -55,21 +52,33 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    // Пока в данном методе нет нужды, т.к. приведет к удалению всех связанных записей в БД.
+    // В крайнем случае можно удалять конкретные записи "недобросовестного" пользователя
+    // и его заблокировать на определнное время или навсегда.
+    @Override
+    public void removeUser(long idUser) {
+        Session session = HibConfig.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        UserEntity user = session.load(UserEntity.class, idUser);
+        if (user != null) {
+            session.delete((user));}
+        transaction.commit();
+        session.close();}
+
+
     @Override
     @SuppressWarnings("unchecked")
     public List<UserEntity> listUsers() {
         Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
+       Transaction transaction = session.beginTransaction();
 //        for (SeriesEntity series: seriesList){
 //             logger.info("Series list: " + series);}
-        return (List<UserEntity>) session.createQuery("from UserEntity").list();
-    }
+        return (List<UserEntity>) session.createQuery("from UserEntity").list();}
 
     @Override
     @SuppressWarnings("unchecked")
     public boolean checkUserReg(String email) {
-        Session session = HibConfig.getSessionFactory().openSession();
+        Session session = HibConfig.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
         String hql = "FROM UserEntity u where u.email = :paramEmail";
         Query query = session.createQuery(hql).setParameter("paramEmail", email);
@@ -81,13 +90,15 @@ public class UserDaoImpl implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public boolean checkUserAuthen(String email, String password) {
-        Session session = HibConfig.getSessionFactory().openSession();
+        Session session = HibConfig.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
         String hql = "FROM UserEntity u where u.email = :paramEmail and  u.password = :paramPassword";
         Query query = session.createQuery(hql).setParameter("paramEmail", email).setParameter("paramPassword", password);
         List<UserEntity> list = query.list();
         return !list.isEmpty();
     }
+
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -105,7 +116,7 @@ public class UserDaoImpl implements UserDao {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         UserEntity user = session.load(UserEntity.class, idUser);
-        String passwordBlocked = Integer.toString((int) (Math.random() * 5));
+        String passwordBlocked = Integer.toString((int) (Math.random() * 9999 + 9999));
         user.setPassword(String.join(" blocked ", user.getPassword(), passwordBlocked));
         session.update(user);
         transaction.commit();
@@ -124,6 +135,21 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
-}
+    @Override
+    @SuppressWarnings("unchecked")
+    public boolean blockingUserCheck(UserEntity user) {
+        Session session = HibConfig.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "FROM UserEntity u where u.email = :paramEmail";
+        Query query = session.createQuery(hql).setParameter("paramEmail", user.getEmail());
+        List<UserEntity> list = query.list();
+        UserEntity userBlockingCheck = list.get(0);
+        return userBlockingCheck.getPassword().contains(" blocked ");
+        }
+
+
+    }
+
+
 
 

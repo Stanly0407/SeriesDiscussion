@@ -14,6 +14,7 @@ public class Main {
     public static void main(final String[] args) {
         SeriesServiceImpl seriesService = new SeriesServiceImpl();
         UserServiceImpl userService = new UserServiceImpl();
+
 //        SeriesEntity series = new SeriesEntity ("Тест - наименование",
 //                "Тест - содержание",
 //                "Тест - страна", "Тест - жанр 1", "Тест - жанр 1",
@@ -46,9 +47,11 @@ public class Main {
         System.out.println(seriesService.getSeriesByID(1));
 
         //  userService.blockingUser(53);
-         userService.unBlockingUser(53);
-        System.out.println(userService.getUserByID(53));
-
+  //       userService.unBlockingUser(53);
+      //  System.out.println(userService.getUserByID(53));
+     UserEntity user = userService.getUserByID(56);
+        System.out.println(user);
+        System.out.println( userService.blockingUserCheck(user));
 
     }
 }
