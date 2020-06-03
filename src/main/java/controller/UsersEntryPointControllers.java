@@ -13,6 +13,8 @@ import service.SeriesServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
+import java.security.Principal;
+
 
 @Controller
 public class UsersEntryPointControllers {
@@ -33,8 +35,9 @@ public class UsersEntryPointControllers {
     }
 
 
-    @GetMapping(value = "/")
+    @GetMapping("/") //Аннотация используется для маппинга урл-адреса запроса на указанный метод или класс. Запрос можно маппить как на метод класса, так и на целый класс. Допускается указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
     public String getHomePage() {
+
         return "userPages/homePage";
     }
 
@@ -49,11 +52,9 @@ public class UsersEntryPointControllers {
     }
 
 
-    @PostMapping(value = "newRegistration", produces = MediaType.TEXT_PLAIN_VALUE + "; charset=utf-8")
-    public String registrationOfUser(@ModelAttribute("user") UserEntity user) {
-        if (userService.checkUserForm(user)) {
-            return "userPages/registrationCheckForm";
-        } else if (userService.checkUserReg(user.getEmail())) {
+    @PostMapping(value = "newRegistration")
+    public String registrationOfUser(@ModelAttribute("user") UserEntity user, Principal principal) {  //Аннотация, связывающая параметр метода или возвращаемое значение метода с атрибутом модели, которая будет использоваться при выводе jsp-страницы.
+        if (userService.checkUserReg(user.getEmail())) {
             userService.addUser(user);
             return "userPages/homePageSuccessfully";
         } else {
@@ -62,10 +63,8 @@ public class UsersEntryPointControllers {
     }
 
     @PostMapping(value = "authentication", produces = MediaType.TEXT_PLAIN_VALUE + "; charset=utf-8")
-    public String authenticationOfUser(@ModelAttribute("user") UserEntity user) {
-        if (userService.checkUserAuthenForm(user)) {
-            return "userPages/authentication";
-        } else if (userService.checkAdminAuthen(user)) {
+    public String authenticationOfUser(@ModelAttribute("user") UserEntity user, Principal principal) {
+     if (userService.checkAdminAuthen(user)) {
             return "adminPages/adminMainPage";
         } else if (userService.blockingUserCheck(user)){
             return "userPages/userBlockedInfoPage";
@@ -77,9 +76,9 @@ public class UsersEntryPointControllers {
         }
     }
 
-
-
 }
+
+
 
 
 

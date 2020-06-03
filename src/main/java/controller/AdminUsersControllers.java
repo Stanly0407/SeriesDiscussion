@@ -4,19 +4,15 @@ package controller;
 import model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import service.SeriesService;
-import service.SeriesServiceImpl;
 import service.UserService;
 import service.UserServiceImpl;
 
 
 @Controller
-public class AdminControllers {
+public class AdminUsersControllers {
     UserServiceImpl userService = new UserServiceImpl();
 
 
@@ -25,7 +21,6 @@ public class AdminControllers {
     public void setUserService(UserService userService) {
         this.userService = (UserServiceImpl) userService;
     }
-
 
 
     @GetMapping(value = "adminUsersInfoList")
@@ -37,7 +32,7 @@ public class AdminControllers {
     }
 
 
-    @RequestMapping("/remove/{idUser}")
+    @RequestMapping("/removeUser/{idUser}")
     public String removeUser(@PathVariable("idUser") long idUser, Model model) {
         userService.removeUser(idUser);
         model.addAttribute("user", new UserEntity());
@@ -61,20 +56,19 @@ public class AdminControllers {
         return "adminPages/adminUsersInfo";
     }
 
-    @RequestMapping("edit/{idUser}")
-    public String editUser(@PathVariable("idUser") int idUser, Model model) {
+    @RequestMapping("editUser/{idUser}")
+    public String editUser(@PathVariable("idUser") int idUser, Model model) { // Аннотация, которая показывает, что параметр метода должен быть связан с переменной из урл-адреса.
         UserEntity user = userService.getUserByID(idUser);
         System.out.println(user);
         userService.evictUser(user);
         System.out.println(user);
         model.addAttribute("command", user);
         System.out.println(user);
-        return "adminPages/adminUserEditFormPage";
-
+        return "adminPages/adminUsersEditFormPage";
     }
 
-    @PostMapping(value="editSave")
-    public String editSave(@ModelAttribute("user") UserEntity user, Model model){
+    @PostMapping(value="editSaveUser")
+    public String editSaveUser(@ModelAttribute("user") UserEntity user, Model model){ //Аннотация, связывающая параметр метода или возвращаемое значение метода с атрибутом модели, которая будет использоваться при выводе jsp-страницы.
         model.addAttribute("user", user);
         System.out.println(user);
         userService.updateUser(user);

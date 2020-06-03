@@ -10,16 +10,17 @@ import repository.UserDaoImpl;
 
 import java.util.List;
 
-@Service
+@Service //чтобы объявить, что этот класс представляет сервис – компонент сервис-слоя. Сервис является подтипом класса @Component. Использование данной аннотации позволит искать бины-сервисы автоматически (смотрите далее в root-context.xml).
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private Validator validator;
 
+    @Autowired
     private UserDao userDao = new UserDaoImpl();
 
     @Override
-    @Transactional
+    @Transactional //Перед исполнением метода помеченного данной аннотацией начинается транзакция, после выполнения метода транзакция коммитится, при выбрасывании RuntimeException откатывается.
     public void addUser(UserEntity user) {
         if (user != null) {
             userDao.addUser(user);
@@ -74,17 +75,7 @@ public class UserServiceImpl implements UserService {
         return userDao.checkUserAuthen(email, password);
     }
 
-    @Override
-    public boolean checkUserForm(UserEntity user) {
-        return user.getEmail() == null || user.getSurname() == null ||
-                user.getForename() == null || user.getPassword() == null ||
-                user.getBirthdate() == null;
-    }
 
-    @Override
-    public boolean checkUserAuthenForm(UserEntity user){
-        return user.getEmail() == null || user.getPassword() == null;
-    }
 
     @Override
     public boolean checkAdminAuthen(UserEntity user) {
@@ -104,3 +95,17 @@ public class UserServiceImpl implements UserService {
 
 }
 
+
+
+
+//@Override
+//    public boolean checkUserForm(UserEntity user) {
+//        return user.getEmail() == null || user.getSurname() == null ||
+//                user.getForename() == null || user.getPassword() == null ||
+//                user.getBirthdate() == null;
+//    }
+//
+//    @Override
+//    public boolean checkUserAuthenForm(UserEntity user){
+//        return user.getEmail() == null || user.getPassword() == null;
+//    }

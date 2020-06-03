@@ -20,10 +20,6 @@ public interface UserService {
 
     boolean checkUserAuthen(String email, String password);
 
-    boolean checkUserForm(UserEntity user);
-
-    boolean checkUserAuthenForm(UserEntity user);
-
     boolean checkAdminAuthen(UserEntity user);
 
     void blockingUser(long idUser);

@@ -19,10 +19,10 @@
 
 
 <h1>Редактирование пользователя.</h1>
-<c:url var="editSave" value="/editSave"/>
+<c:url var="editSaveUser" value="/editSaveUser"/>
 
 
-<form:form  action="${editSave}" modelAttribute="command" >
+<form:form  action="${editSaveUser}" modelAttribute="command" >
 <table >
     <tr>
         <td>ID: </td>

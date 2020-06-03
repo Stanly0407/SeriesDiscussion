@@ -44,7 +44,7 @@
             <form action="adminUsersInfoList" method="get">
             <td><a href="<c:url value='/blockingUser/${user.idUser}'/>">Заблокировать</a></td>
             <td><a href="<c:url value='/unBlockingUser/${user.idUser}'/>">Разблокировать</a></td>
-            <td ><a href="<c:url value='/edit/${user.idUser}'/>">Редактировать</a></td>
+            <td ><a href="<c:url value='/editUser/${user.idUser}'/>">Редактировать</a></td>
 <%--            <td style="color: red"><a href="<c:url value="/remove/${user.idUser}"/>">Удалить</a></td>--%>
             </form>
         </tr>

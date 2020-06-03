@@ -29,6 +29,7 @@ public class HibConfig {
                 configuration.setProperties(settings);
 
               configuration.addAnnotatedClass(UserEntity.class);
+                configuration.addAnnotatedClass(RolesEntity.class);
               configuration.addAnnotatedClass(ReviewEntity.class);
               configuration.addAnnotatedClass(SeriesEntity.class);
               configuration.addAnnotatedClass(CommentReviewEntity.class);

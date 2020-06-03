@@ -1,6 +1,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<param name="FlashVars" value="${fn:escapeXml(flashVars)}" />
+<param name="FlashVars" value="${fn:escapeXml(flashVars)}"/>
 <%@ page contentType="text/html;charset=utf-8" %>
 
 <html>
@@ -17,10 +17,13 @@
 
 <form action="authentication" method="post">
     <p style="text-align: center;"><b style="font-style: oblique; color: darkblue"> E-mail:</b> <br>
-        <input type="text" size="40" name="email">
+        <input type="email" size="40" name="email" title="Поле должно быть заполнено" required>
     </p>
     <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Пароль</b><br>
-        <input type="text" size="40" name="password">
+        <input type="password" size="40" name="password" title="Поле должно быть заполнено" required>
+    </p>
+    <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Запомнить</b><br>
+        <input type="checkbox" name="remember-me"/>
     </p>
     <p style="text-align: center;">
         <button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"> OK</button>
@@ -28,7 +31,7 @@
 
 </form>
 
-<p style="text-align: center;"> <a href="../userPages/registration.jsp">Registration </a> </p>
+<p style="text-align: center;"><a href="../userPages/registration.jsp">Registration </a></p>
 
 </body>
 </html>

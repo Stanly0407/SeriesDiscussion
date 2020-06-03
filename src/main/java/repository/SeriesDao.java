@@ -6,11 +6,12 @@ import model.SeriesEntity;
 import java.util.List;
 
 public interface SeriesDao {
-    public void addSeries(SeriesEntity series);
-    public void updateSeries(SeriesEntity series);
-    public void removeSeries(long idSeries);
-    public SeriesEntity getSeriesByID(long idSeries);
-    public List<SeriesEntity> listSeries();
+     void addSeries(SeriesEntity series);
+     void updateSeries(SeriesEntity series);
+     void removeSeries(long idSeries);
+     SeriesEntity getSeriesByID(long idSeries);
+     List<SeriesEntity> listSeries();
+     void evictSeries (SeriesEntity series);
 
 
 

@@ -6,15 +6,26 @@ import java.util.Objects;
 @Entity
 @Table(name = "comment_review", schema = "seriesdiscuss", catalog = "")
 public class CommentReviewEntity {
-    private long idCommentReview;
-    private String contentCommentReview;
-    private long likesQuantityCommentReview;
-    private ReviewEntity reviewByIdRevRev;
-    private UserEntity userByIdUsUser;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_comment_review", nullable = false)
+    private long idCommentReview;
+
+    @Column(name = "content_comment_review", nullable = true, length = 2040)
+    private String contentCommentReview;
+
+    @Column(name = "likes_quantity_comment_review", nullable = true)
+    private long likesQuantityCommentReview;
+
+    @ManyToOne
+    @JoinColumn(name = "id_rev_rev", referencedColumnName = "id_review")
+    private ReviewEntity reviewByIdRevRev;
+
+    @ManyToOne
+    @JoinColumn(name = "email_us_user", referencedColumnName = "email", nullable = false)
+    private UserEntity userByEmailUsUser;
+
     public long getIdCommentReview() {
         return idCommentReview;
     }
@@ -23,8 +34,6 @@ public class CommentReviewEntity {
         this.idCommentReview = idCommentReview;
     }
 
-    @Basic
-    @Column(name = "content_comment_review", nullable = true, length = 2040)
     public String getContentCommentReview() {
         return contentCommentReview;
     }
@@ -33,8 +42,6 @@ public class CommentReviewEntity {
         this.contentCommentReview = contentCommentReview;
     }
 
-    @Basic
-    @Column(name = "likes_quantity_comment_review", nullable = true)
     public Long getLikesQuantityCommentReview() {
         return likesQuantityCommentReview;
     }
@@ -43,16 +50,31 @@ public class CommentReviewEntity {
         this.likesQuantityCommentReview = likesQuantityCommentReview;
     }
 
-    public CommentReviewEntity(){}
+    public CommentReviewEntity() {
+    }
 
-    public CommentReviewEntity(long idCommentReview, String contentCommentReview, Long likesQuantityCommentReview, model.ReviewEntity reviewByIdRevRev, model.UserEntity userByIdUsUser) {
-        this.idCommentReview = idCommentReview;
+    public CommentReviewEntity(String contentCommentReview, long likesQuantityCommentReview, ReviewEntity reviewByIdRevRev, UserEntity userByEmailUsUser) {
         this.contentCommentReview = contentCommentReview;
         this.likesQuantityCommentReview = likesQuantityCommentReview;
         this.reviewByIdRevRev = reviewByIdRevRev;
-        this.userByIdUsUser = userByIdUsUser;
+        this.userByEmailUsUser = userByEmailUsUser;
     }
 
+    public model.ReviewEntity getReviewByIdRevRev() {
+        return reviewByIdRevRev;
+    }
+
+    public void setReviewByIdRevRev(model.ReviewEntity reviewByIdRevRev) {
+        this.reviewByIdRevRev = reviewByIdRevRev;
+    }
+
+    public model.UserEntity getUserByIdUsUser() {
+        return userByEmailUsUser;
+    }
+
+    public void setUserByIdUsUser(model.UserEntity userByEmailUsUser) {
+        this.userByEmailUsUser = userByEmailUsUser;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -63,31 +85,22 @@ public class CommentReviewEntity {
                 likesQuantityCommentReview == that.likesQuantityCommentReview &&
                 Objects.equals(contentCommentReview, that.contentCommentReview) &&
                 Objects.equals(reviewByIdRevRev, that.reviewByIdRevRev) &&
-                Objects.equals(userByIdUsUser, that.userByIdUsUser);
+                Objects.equals(userByEmailUsUser, that.userByEmailUsUser);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCommentReview, contentCommentReview, likesQuantityCommentReview, reviewByIdRevRev, userByIdUsUser);
+        return Objects.hash(idCommentReview, contentCommentReview, likesQuantityCommentReview, reviewByIdRevRev, userByEmailUsUser);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_rev_rev", referencedColumnName = "id_review")
-    public model.ReviewEntity getReviewByIdRevRev() {
-        return reviewByIdRevRev;
-    }
-
-    public void setReviewByIdRevRev(model.ReviewEntity reviewByIdRevRev) {
-        this.reviewByIdRevRev = reviewByIdRevRev;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_us_user", referencedColumnName = "id_user")
-    public model.UserEntity getUserByIdUsUser() {
-        return userByIdUsUser;
-    }
-
-    public void setUserByIdUsUser(model.UserEntity userByIdUsUser) {
-        this.userByIdUsUser = userByIdUsUser;
+    @Override
+    public String toString() {
+        return "CommentReviewEntity{" +
+                "idCommentReview=" + idCommentReview +
+                ", contentCommentReview='" + contentCommentReview + '\'' +
+                ", likesQuantityCommentReview=" + likesQuantityCommentReview +
+                ", reviewByIdRevRev=" + reviewByIdRevRev +
+                ", userByEmailUsUser=" + userByEmailUsUser +
+                '}';
     }
 }

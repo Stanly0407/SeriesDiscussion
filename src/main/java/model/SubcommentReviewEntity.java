@@ -7,14 +7,23 @@ import java.util.Objects;
 @Entity
 @Table(name = "subcomment_review", schema = "seriesdiscuss", catalog = "")
 public class SubcommentReviewEntity {
-    private long idSubcommentReview;
-    private String contentSubcommentReview;
-    private long likesQuantitySubcommentReview;
-    private UserEntity userByIdUserUserUs;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_subcomment_review", nullable = false)
+    private long idSubcommentReview;
+
+    @Column(name = "content_subcomment_review", nullable = true, length = 2040)
+    private String contentSubcommentReview;
+
+    @Column(name = "likes_quantity_subcomment_review", nullable = true)
+    private long likesQuantitySubcommentReview;
+
+    @ManyToOne
+    @JoinColumn(name = "email_user_user_us", referencedColumnName = "email", nullable = false)
+    private UserEntity userByEmailUserUserUs;
+
+
     public long getIdSubcommentReview() {
         return idSubcommentReview;
     }
@@ -23,8 +32,6 @@ public class SubcommentReviewEntity {
         this.idSubcommentReview = idSubcommentReview;
     }
 
-    @Basic
-    @Column(name = "content_subcomment_review", nullable = true, length = 2040)
     public String getContentSubcommentReview() {
         return contentSubcommentReview;
     }
@@ -33,8 +40,6 @@ public class SubcommentReviewEntity {
         this.contentSubcommentReview = contentSubcommentReview;
     }
 
-    @Basic
-    @Column(name = "likes_quantity_subcomment_review", nullable = true)
     public Long getLikesQuantitySubcommentReview() {
         return likesQuantitySubcommentReview;
     }
@@ -45,11 +50,19 @@ public class SubcommentReviewEntity {
 
     public SubcommentReviewEntity(){}
 
-    public SubcommentReviewEntity(long idSubcommentReview, String contentSubcommentReview, Long likesQuantitySubcommentReview, model.UserEntity userByIdUserUserUs) {
-        this.idSubcommentReview = idSubcommentReview;
-        this.contentSubcommentReview = contentSubcommentReview;
+    public SubcommentReviewEntity(String contentSubcommentReview, long likesQuantitySubcommentReview, UserEntity userByEmailUserUserUs) {
+       this.contentSubcommentReview = contentSubcommentReview;
         this.likesQuantitySubcommentReview = likesQuantitySubcommentReview;
-        this.userByIdUserUserUs = userByIdUserUserUs;
+        this.userByEmailUserUserUs = userByEmailUserUserUs;
+    }
+
+
+    public UserEntity getUserByEmailUserUserUs() {
+        return userByEmailUserUserUs;
+    }
+
+    public void setUserByEmailUserUserUs(model.UserEntity userByEmailUserUserUs) {
+        this.userByEmailUserUserUs = userByEmailUserUserUs;
     }
 
     @Override
@@ -60,31 +73,21 @@ public class SubcommentReviewEntity {
         return idSubcommentReview == that.idSubcommentReview &&
                 likesQuantitySubcommentReview == that.likesQuantitySubcommentReview &&
                 Objects.equals(contentSubcommentReview, that.contentSubcommentReview) &&
-                Objects.equals(userByIdUserUserUs, that.userByIdUserUserUs);
+                Objects.equals(userByEmailUserUserUs, that.userByEmailUserUserUs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idSubcommentReview, contentSubcommentReview, likesQuantitySubcommentReview, userByIdUserUserUs);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_user_user_us", referencedColumnName = "id_user")
-    public model.UserEntity getUserByIdUserUserUs() {
-        return userByIdUserUserUs;
-    }
-
-    public void setUserByIdUserUserUs(model.UserEntity userByIdUserUserUs) {
-        this.userByIdUserUserUs = userByIdUserUserUs;
+        return Objects.hash(idSubcommentReview, contentSubcommentReview, likesQuantitySubcommentReview, userByEmailUserUserUs);
     }
 
     @Override
     public String toString() {
-        return "model.SubcommentReviewEntity{" +
+        return "SubcommentReviewEntity{" +
                 "idSubcommentReview=" + idSubcommentReview +
                 ", contentSubcommentReview='" + contentSubcommentReview + '\'' +
                 ", likesQuantitySubcommentReview=" + likesQuantitySubcommentReview +
-                ", userByIdUserUserUs=" + userByIdUserUserUs +
+                ", userByEmailUserUserUs=" + userByEmailUserUserUs +
                 '}';
     }
 }

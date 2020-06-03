@@ -23,7 +23,7 @@ public class Main {
 //        seriesService.addSeries(series);
 //        System.out.println(series + "\n");
 
- //seriesService.removeSeries(31);
+ //seriesService.removeSeries(10);
 //        seriesService.removeSeries(16);
 //
    //    userService.removeUser(41);
@@ -49,7 +49,7 @@ public class Main {
         //  userService.blockingUser(53);
   //       userService.unBlockingUser(53);
       //  System.out.println(userService.getUserByID(53));
-     UserEntity user = userService.getUserByID(56);
+     UserEntity user = userService.getUserByID(1);
         System.out.println(user);
         System.out.println( userService.blockingUserCheck(user));
 

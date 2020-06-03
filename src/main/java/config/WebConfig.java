@@ -4,30 +4,29 @@ package config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.CacheControl;
-import org.springframework.lang.Nullable;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
-import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.SessionTrackingMode;
 import java.time.format.DateTimeFormatter;
+import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"config", "controller", "repository", "model", "service"})
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig  implements WebMvcConfigurer
+        , WebApplicationInitializer {
 
     @Bean
     ViewResolver viewResolver(){
@@ -40,11 +39,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Register resource handler for CSS and JS
-//        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/statics/", "D:/statics/")
-//                .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-
-        // Register resource handler for images
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/")
                 .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
     }
@@ -58,15 +52,17 @@ public class WebConfig implements WebMvcConfigurer {
         registrar.setDateFormatter(DateTimeFormatter.ofPattern("dd-mm-yyyy"));
         registrar.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
         registrar.registerFormatters(conversionService);
-
         // other desired formatters
-
         return conversionService;
     }
 
 
-
-
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
+        servletContext.getSessionCookieConfig().setHttpOnly(true); //Безопасный сеанс Cookie
+        servletContext.getSessionCookieConfig().setSecure(true); //Безопасный сеанс Cookie https://www.baeldung.com/spring-security-session
+    }
 
 
 

@@ -1,13 +1,21 @@
 package service;
 
 import model.SeriesEntity;
+import org.springframework.security.access.annotation.Secured;
 
 import java.util.List;
 
 public interface SeriesService {
-    public void addSeries(SeriesEntity series);
-    public void updateSeries(SeriesEntity series);
-    public void removeSeries(long idSeries);
-    public SeriesEntity getSeriesByID(long idSeries);
-    public List<SeriesEntity> listSeries();
+    @Secured("ADMIN")
+    void addSeries(SeriesEntity series);
+
+    void updateSeries(SeriesEntity series);
+
+    void removeSeries(long idSeries);
+
+    SeriesEntity getSeriesByID(long idSeries);
+
+    List<SeriesEntity> listSeries();
+
+    void evictSeries(SeriesEntity series);
 }

@@ -26,6 +26,10 @@
     </p>
 </form>
 
+<button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"><a href="adminSeriesInfoList"> Список сериалов </a></button>
+<br>
+<button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"> <a href="authentication"> Список обзоров </a>  </button>  </p>
+
 </body>
 
 </html>

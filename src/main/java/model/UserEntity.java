@@ -1,53 +1,69 @@
 package model;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-
-@Entity
+@Scope("session")
+@Entity //Класс представляет объект, который нужно долговременно хранить. поля класса имеют отображение в БД
 @Table(name = "user", schema = "seriesdiscuss")
 public class UserEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user", nullable = false)
-    private long idUser;
 
-    @Basic
+ //   private static final long serialVersionUID = 1L;
+
+
     @Column(name = "forename", nullable = true, length = 255)
     private String forename;
 
-    @Basic
     @Column(name = "surname", nullable = true, length = 255)
     private String surname;
 
-    @Basic
-    @Column(name = "email", nullable = true, length = 255)
+    @Id
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @Basic
     @Column(name = "password", nullable = true, length = 255)
     private String password;
 
-    @Basic
     @Column(name = "rate_user", nullable = true)
     private Long rateUser = 0L;
 
-    @Basic
     @Column(name = "birthdate", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
-    public long getIdUser() {
-        return idUser;
-    }
+    @Column(name = "enabled")
+    private boolean enabled;
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<RolesEntity> roles = new HashSet<>();
+
+
+    //    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return (Collection<? extends GrantedAuthority>) getRoles();
+//    }
+
+//    @OneToMany
+//    @JoinColumn(name = "email_user", referencedColumnName = "email")
+//    private Set<RolesEntity> setUserRole = new HashSet<RolesEntity>(0);;
+//
+//    public Set<RolesEntity> getUserRole() {
+//        return userRolesEntity.getUserRole(email);
+//    }
+//
+//    public void setUserRole(Set<RolesEntity> userRole) {
+//        this.userRole = userRole;
+//    }
+
 
     public String getForename() {
         return forename;
@@ -97,16 +113,43 @@ public class UserEntity implements Serializable {
         this.birthdate = birthdate;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<RolesEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RolesEntity> roles) {
+        this.roles = roles;
+    }
+
     public UserEntity(){}
 
-    public UserEntity(long idUser, String forename, String surname, String email, String password, Long rateUser, LocalDate birthdate) {
-        this.idUser = idUser;
+    public UserEntity(String forename, String surname, String email, String password, Long rateUser, LocalDate birthdate, boolean enabled, Set<RolesEntity> roles) {
         this.forename = forename;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.rateUser = rateUser;
         this.birthdate = birthdate;
+        this.enabled = enabled;
+        this.roles = roles;
+    }
+
+    public UserEntity(String forename, String surname, String email, String password, Long rateUser, LocalDate birthdate, boolean enabled) {
+        this.forename = forename;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.rateUser = rateUser;
+        this.birthdate = birthdate;
+        this.enabled = enabled;
     }
 
     public UserEntity(String email, String password) {
@@ -136,30 +179,39 @@ public class UserEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return idUser == that.idUser &&
-                rateUser == that.rateUser &&
+        return enabled == that.enabled &&
                 Objects.equals(forename, that.forename) &&
                 Objects.equals(surname, that.surname) &&
                 Objects.equals(email, that.email) &&
                 Objects.equals(password, that.password) &&
-                Objects.equals(birthdate, that.birthdate);
+                Objects.equals(rateUser, that.rateUser) &&
+                Objects.equals(birthdate, that.birthdate) &&
+                Objects.equals(roles, that.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUser, forename, surname, email, password, rateUser, birthdate);
+        return Objects.hash(forename, surname, email, password, rateUser, birthdate, enabled, roles);
     }
 
     @Override
     public String toString() {
-        return "model.UserEntity{" +
-                "idUser=" + idUser +
-                ", forename='" + forename + '\'' +
+        return "UserEntity{" +
+                "forename='" + forename + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", rateUser=" + rateUser +
                 ", birthdate=" + birthdate +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
                 '}';
     }
+
+
+    //    public UserDetails toCurrentUserDetails() {
+//        return CurrentUserDetails.create(this);
+//    }
+
+
 }

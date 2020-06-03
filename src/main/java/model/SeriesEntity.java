@@ -6,16 +6,38 @@ import java.util.Objects;
 @Entity
 @Table(name = "series", schema = "seriesdiscuss", catalog = "")
 public class SeriesEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_series", nullable = false)
     private long idSeries;
+
+    @Column(name = "title_series", nullable = true, length = 255)
     private String titleSeries;
+
+    @Column(name = "content_series", nullable = true, length = 2040)
     private String contentSeries;
+
+    @Column(name = "country", nullable = true, length = 255)
     private String country;
+
+    @Column(name = "genre_one", nullable = true, length = 255)
     private String genreOne;
+
+    @Column(name = "genre_two", nullable = true, length = 255)
     private String genreTwo;
+
+    @Column(name = "year", nullable = true)
     private int year;
+
+    @Column(name = "seasons", nullable = true)
     private int seasons;
-    private long likesQuantitySeries;
-    private long commentQuantitySeries;
+
+    @Column(name = "likes_quantity_series", nullable = true)
+    private long likesQuantitySeries = 0L;
+
+    @Column(name = "comment_quantity_series", nullable = true)
+    private long commentQuantitySeries = 0L;
 
     public SeriesEntity(String titleSeries, String contentSeries, String country, String genreOne, String genreTwo, int year, int seasons, long likesQuantitySeries, long commentQuantitySeries) {
         this.titleSeries = titleSeries;
@@ -29,9 +51,6 @@ public class SeriesEntity {
         this.commentQuantitySeries = commentQuantitySeries;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_series", nullable = false)
     public long getIdSeries() {
         return idSeries;
     }
@@ -40,8 +59,6 @@ public class SeriesEntity {
         this.idSeries = idSeries;
     }
 
-    @Basic
-    @Column(name = "title_series", nullable = true, length = 255)
     public String getTitleSeries() {
         return titleSeries;
     }
@@ -50,8 +67,6 @@ public class SeriesEntity {
         this.titleSeries = titleSeries;
     }
 
-    @Basic
-    @Column(name = "content_series", nullable = true, length = 2040)
     public String getContentSeries() {
         return contentSeries;
     }
@@ -60,8 +75,6 @@ public class SeriesEntity {
         this.contentSeries = contentSeries;
     }
 
-    @Basic
-    @Column(name = "country", nullable = true, length = 255)
     public String getCountry() {
         return country;
     }
@@ -70,8 +83,6 @@ public class SeriesEntity {
         this.country = country;
     }
 
-    @Basic
-    @Column(name = "genre_one", nullable = true, length = 255)
     public String getGenreOne() {
         return genreOne;
     }
@@ -80,8 +91,6 @@ public class SeriesEntity {
         this.genreOne = genreOne;
     }
 
-    @Basic
-    @Column(name = "genre_two", nullable = true, length = 255)
     public String getGenreTwo() {
         return genreTwo;
     }
@@ -90,8 +99,6 @@ public class SeriesEntity {
         this.genreTwo = genreTwo;
     }
 
-    @Basic
-    @Column(name = "year", nullable = true)
     public Integer getYear() {
         return year;
     }
@@ -100,8 +107,6 @@ public class SeriesEntity {
         this.year = year;
     }
 
-    @Basic
-    @Column(name = "seasons", nullable = true)
     public Integer getSeasons() {
         return seasons;
     }
@@ -110,8 +115,6 @@ public class SeriesEntity {
         this.seasons = seasons;
     }
 
-    @Basic
-    @Column(name = "likes_quantity_series", nullable = true)
     public Long getLikesQuantitySeries() {
         return likesQuantitySeries;
     }
@@ -120,17 +123,13 @@ public class SeriesEntity {
         this.likesQuantitySeries = likesQuantitySeries;
     }
 
-    @Basic
-    @Column(name = "comment_quantity_series", nullable = true)
     public Long getCommentQuantitySeries() {
         return commentQuantitySeries;
     }
 
-    public void setCommentQuantitySeries(Long commentQuantitySeries) {
-        this.commentQuantitySeries = commentQuantitySeries;
-    }
+    public void setCommentQuantitySeries(Long commentQuantitySeries) {this.commentQuantitySeries = commentQuantitySeries;}
 
-    public SeriesEntity(){}
+    public SeriesEntity() {}
 
     public SeriesEntity(long idSeries, String titleSeries, String contentSeries, String country, String genreOne, String genreTwo, int year, int seasons, long likesQuantitySeries, long commentQuantitySeries) {
         this.idSeries = idSeries;

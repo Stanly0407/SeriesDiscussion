@@ -6,15 +6,27 @@ import java.util.Objects;
 @Entity
 @Table(name = "comment_series", schema = "seriesdiscuss", catalog = "")
 public class CommentSeriesEntity {
-    private long idCommentSeries;
-    private String contentCommentSeries;
-    private long likesQuantityCommentSeries;
-    private SeriesEntity seriesByIdSerSer;
-    private UserEntity userByIdUsUs;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_comment_series", nullable = false)
+    private long idCommentSeries;
+
+    @Column(name = "content_comment_series", nullable = true, length = 2040)
+    private String contentCommentSeries;
+
+    @Column(name = "likes_quantity_comment_series", nullable = true)
+    private long likesQuantityCommentSeries;
+
+    @ManyToOne
+    @JoinColumn(name = "id_ser_ser", referencedColumnName = "id_series")
+    private SeriesEntity seriesByIdSerSer;
+
+    @ManyToOne
+    @JoinColumn(name = "email_us_us", referencedColumnName = "email", nullable = false)
+    private UserEntity userByEmailUsUs;
+
+
     public long getIdCommentSeries() {
         return idCommentSeries;
     }
@@ -23,8 +35,6 @@ public class CommentSeriesEntity {
         this.idCommentSeries = idCommentSeries;
     }
 
-    @Basic
-    @Column(name = "content_comment_series", nullable = true, length = 2040)
     public String getContentCommentSeries() {
         return contentCommentSeries;
     }
@@ -33,8 +43,6 @@ public class CommentSeriesEntity {
         this.contentCommentSeries = contentCommentSeries;
     }
 
-    @Basic
-    @Column(name = "likes_quantity_comment_series", nullable = true)
     public Long getLikesQuantityCommentSeries() {
         return likesQuantityCommentSeries;
     }
@@ -43,16 +51,32 @@ public class CommentSeriesEntity {
         this.likesQuantityCommentSeries = likesQuantityCommentSeries;
     }
 
-    public CommentSeriesEntity(){}
+    public CommentSeriesEntity() {
+    }
 
-    public CommentSeriesEntity(long idCommentSeries, String contentCommentSeries, Long likesQuantityCommentSeries, model.SeriesEntity seriesByIdSerSer, model.UserEntity userByIdUsUs) {
-        this.idCommentSeries = idCommentSeries;
+    public CommentSeriesEntity(String contentCommentSeries, long likesQuantityCommentSeries, SeriesEntity seriesByIdSerSer, UserEntity userByEmailUsUs) {
         this.contentCommentSeries = contentCommentSeries;
         this.likesQuantityCommentSeries = likesQuantityCommentSeries;
         this.seriesByIdSerSer = seriesByIdSerSer;
-        this.userByIdUsUs = userByIdUsUs;
+        this.userByEmailUsUs = userByEmailUsUs;
     }
 
+    public SeriesEntity getSeriesByIdSerSer() {
+        return seriesByIdSerSer;
+    }
+
+    public void setSeriesByIdSerSer(SeriesEntity seriesByIdSerSer) {
+        this.seriesByIdSerSer = seriesByIdSerSer;
+    }
+
+
+    public UserEntity getUserByEmailUsUs() {
+        return userByEmailUsUs;
+    }
+
+    public void setUserByEmailUsUs(UserEntity userByEmailUsUs) {
+        this.userByEmailUsUs = userByEmailUsUs;
+    }
 
 
     @Override
@@ -64,42 +88,22 @@ public class CommentSeriesEntity {
                 likesQuantityCommentSeries == that.likesQuantityCommentSeries &&
                 Objects.equals(contentCommentSeries, that.contentCommentSeries) &&
                 Objects.equals(seriesByIdSerSer, that.seriesByIdSerSer) &&
-                Objects.equals(userByIdUsUs, that.userByIdUsUs);
+                Objects.equals(userByEmailUsUs, that.userByEmailUsUs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCommentSeries, contentCommentSeries, likesQuantityCommentSeries, seriesByIdSerSer, userByIdUsUs);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_ser_ser", referencedColumnName = "id_series")
-    public model.SeriesEntity getSeriesByIdSerSer() {
-        return seriesByIdSerSer;
-    }
-
-    public void setSeriesByIdSerSer(model.SeriesEntity seriesByIdSerSer) {
-        this.seriesByIdSerSer = seriesByIdSerSer;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "id_us_us", referencedColumnName = "id_user")
-    public model.UserEntity getUserByIdUsUs() {
-        return userByIdUsUs;
-    }
-
-    public void setUserByIdUsUs(model.UserEntity userByIdUsUs) {
-        this.userByIdUsUs = userByIdUsUs;
+        return Objects.hash(idCommentSeries, contentCommentSeries, likesQuantityCommentSeries, seriesByIdSerSer, userByEmailUsUs);
     }
 
     @Override
     public String toString() {
-        return "model.CommentSeriesEntity{" +
+        return "CommentSeriesEntity{" +
                 "idCommentSeries=" + idCommentSeries +
                 ", contentCommentSeries='" + contentCommentSeries + '\'' +
                 ", likesQuantityCommentSeries=" + likesQuantityCommentSeries +
                 ", seriesByIdSerSer=" + seriesByIdSerSer +
-                ", userByIdUsUs=" + userByIdUsUs +
+                ", userByEmailUsUs=" + userByEmailUsUs +
                 '}';
     }
 }
