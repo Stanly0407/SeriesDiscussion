@@ -1,32 +1,31 @@
 package service;
 
-import model.SeriesEntity;
-import model.UserEntity;
+import model.User;
 
 import java.util.List;
 
 public interface UserService {
-    void addUser(UserEntity user);
+    void addUser(User user);
 
-    void updateUser(UserEntity user);
+    void updateUser(User user);
 
-    void removeUser(long idUser);
+    void removeUser(String username);
 
-    UserEntity getUserByID(long idUser);
+    User getUserByUsername(String username);
 
-    List<UserEntity> listUsers();
+    List<User> listUsers();
 
-    boolean checkUserReg(String email);
+    boolean checkUserReg(String username);
 
-    boolean checkUserAuthen(String email, String password);
+    boolean checkUserAuthen(String username, String password);
 
-    boolean checkAdminAuthen(UserEntity user);
+    boolean checkAdminAuthen(User user);
 
-    void blockingUser(long idUser);
+    void blockingUser(String username);
 
-    void unBlockingUser(long idUser);
+    void unBlockingUser(String username);
 
-    void evictUser(UserEntity user);
+    void evictUser(User user);
 
-    boolean blockingUserCheck(UserEntity user);
+    boolean blockingUserCheck(User user);
 }

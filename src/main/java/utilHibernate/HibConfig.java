@@ -28,14 +28,14 @@ public class HibConfig {
 
                 configuration.setProperties(settings);
 
-              configuration.addAnnotatedClass(UserEntity.class);
-                configuration.addAnnotatedClass(RolesEntity.class);
-              configuration.addAnnotatedClass(ReviewEntity.class);
+              configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(Authorities.class);
+            //  configuration.addAnnotatedClass(ReviewEntity.class);
               configuration.addAnnotatedClass(SeriesEntity.class);
-              configuration.addAnnotatedClass(CommentReviewEntity.class);
-              configuration.addAnnotatedClass(CommentSeriesEntity.class);
-              configuration.addAnnotatedClass(SubcommentReviewEntity.class);
-              configuration.addAnnotatedClass(SubcommentSeriesEntity.class);
+            //  configuration.addAnnotatedClass(CommentReviewEntity.class);
+           //   configuration.addAnnotatedClass(CommentSeriesEntity.class);
+            //  configuration.addAnnotatedClass(SubcommentReviewEntity.class);
+            //  configuration.addAnnotatedClass(SubcommentSeriesEntity.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

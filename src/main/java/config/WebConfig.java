@@ -1,6 +1,5 @@
 package config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -8,28 +7,27 @@ import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.CacheControl;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.SessionTrackingMode;
 import java.time.format.DateTimeFormatter;
-import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebMvc
 @ComponentScan(basePackages = {"config", "controller", "repository", "model", "service"})
-public class WebConfig  implements WebMvcConfigurer
-        , WebApplicationInitializer {
+public class WebConfig  implements WebMvcConfigurer {
 
     @Bean
-    ViewResolver viewResolver(){
+    ViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/");
         resolver.setSuffix(".jsp");
@@ -57,16 +55,18 @@ public class WebConfig  implements WebMvcConfigurer
     }
 
 
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
-        servletContext.getSessionCookieConfig().setHttpOnly(true); //Безопасный сеанс Cookie
-        servletContext.getSessionCookieConfig().setSecure(true); //Безопасный сеанс Cookie https://www.baeldung.com/spring-security-session
+    @Override //мы можем зарегистрировать контроллеры представлений, которые создают прямое отображение между
+    // URL-адресом и именем представления, используя ViewControllerRegistry.
+    // Таким образом, нет необходимости в каком-либо контроллере между ними.
+    public void addViewControllers(ViewControllerRegistry registry) {
+//
+//        registry.addViewController("/login").setViewName("login");
+
+        registry.addViewController("/").setViewName("userPages/homePage");
+        registry.addViewController("/registration").setViewName("userPages/registration");
     }
-
-
-
 }
+
 
 
 

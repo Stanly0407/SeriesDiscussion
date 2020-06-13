@@ -1,18 +1,14 @@
 package config;
 
 
-import com.mysql.cj.Session;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{RootConfig.class};
+        return new Class[]{RootConfig.class, WebConfig.class};
         }
 
     @Override
@@ -31,13 +27,19 @@ public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServlet
         characterEncodingFilter.setEncoding("UTF-8");
         return new CharacterEncodingFilter[] { characterEncodingFilter};
     }
-
+//    @Override
+//    public void onStartup(ServletContext servletContext) throws ServletException {
+//        servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
+//        servletContext.getSessionCookieConfig().setHttpOnly(true); //Безопасный сеанс Cookie
+//        servletContext.getSessionCookieConfig().setSecure(true); //Безопасный сеанс Cookie https://www.baeldung.com/spring-security-session
+//    }
 //    @Override
 //    public void onStartup(ServletContext sc) throws ServletException {
 //        // ... для защиты нашего сеансового куки
 //        sc.getSessionCookieConfig().setHttpOnly(true);
 //        sc.getSessionCookieConfig().setSecure(true);
 //    }
+
 //    @Override
 //    protected void registerDispatcherServlet(ServletContext servletContext) {
 //        super.registerDispatcherServlet(servletContext);

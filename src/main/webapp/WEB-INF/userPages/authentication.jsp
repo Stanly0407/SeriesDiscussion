@@ -15,9 +15,9 @@
 
 <hr style="border-width: 3px;">
 
-<form action="authentication" method="post">
+<form action='<spring:url value="authentication"/>' method="post">
     <p style="text-align: center;"><b style="font-style: oblique; color: darkblue"> E-mail:</b> <br>
-        <input type="email" size="40" name="email" title="Поле должно быть заполнено" required>
+        <input type="text" size="40" name="username" title="Поле должно быть заполнено" required>
     </p>
     <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Пароль</b><br>
         <input type="password" size="40" name="password" title="Поле должно быть заполнено" required>

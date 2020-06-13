@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <param name="FlashVars" value="${fn:escapeXml(flashVars)}" />
 <%@ page contentType="text/html;charset=utf-8" %>
-
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Сериалы тут!</title>
@@ -10,8 +10,16 @@
 </head>
 <body>
 <p style="text-align: right">
-    <button><a href="registration"> Личный кабинет </a></button>
-    <button> <a href="authentication"> Выход </a>  </button>  </p>
+
+    <security:authorize access="hasRole('ADMIN')">
+    <button><a href="adminAccount"> ADMIN </a></button>
+    </security:authorize>
+
+    <security:authorize access="hasRole('USER')">
+    <button><a href="personalAccount"> Личный кабинет </a></button>
+    </security:authorize>
+
+    <button> <a href="/logout"> Выход </a>  </button>  </p>
 </p>
 </body>
 

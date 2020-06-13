@@ -1,12 +1,11 @@
 package repository;
 
 
-import model.UserEntity;
+import model.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import utilHibernate.HibConfig;
 
@@ -20,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void addUser(UserEntity user) {
+    public void addUser(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.persist(user);
@@ -43,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 //    }
 
     @Override
-    public void updateUser(UserEntity user) {
+    public void updateUser(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(user);
@@ -53,25 +52,17 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void evictUser(UserEntity user) {
+    public void evictUser(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.getTransaction();
         session.evict(user);
     }
 
-
     @Override
-    public UserEntity getUserByID(long idUser) {
+    public User getUserByUsername(String username) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        return session.load(UserEntity.class, idUser);
-    }
-
-    @Override
-    public UserEntity getUserByEmail(String email) {
-        Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        return session.load(UserEntity.class, email);
+        return session.load(User.class, username);
     }
 
 
@@ -79,45 +70,45 @@ public class UserDaoImpl implements UserDao {
     // В крайнем случае можно удалять конкретные записи "недобросовестного" пользователя
     // и его заблокировать на определнное время или навсегда.
     @Override
-    public void removeUser(long idUser) {
+    public void removeUser(String username) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        UserEntity user = session.load(UserEntity.class, idUser);
+        User user = session.load(User.class, username);
         if (user != null) {
             session.delete((user));}
         transaction.commit();
         session.close();}
 
-
+ //   @Secured(value = {"USER"})
     @Override
     @SuppressWarnings("unchecked")
-    public List<UserEntity> listUsers() {
+    public List<User> listUsers() {
         Session session = HibConfig.getSessionFactory().openSession();
        Transaction transaction = session.beginTransaction();
 //        for (SeriesEntity series: seriesList){
 //             logger.info("Series list: " + series);}
-        return (List<UserEntity>) session.createQuery("from UserEntity").list();}
+        return (List<User>) session.createQuery("from User").list();}
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean checkUserReg(String email) {
+    public boolean checkUserReg(String username) {
         Session session = HibConfig.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        String hql = "FROM UserEntity u where u.email = :paramEmail";
-        Query query = session.createQuery(hql).setParameter("paramEmail", email);
-        List<UserEntity> list = query.list();
+        String hql = "FROM User u where u.username = :paramUsername";
+        Query query = session.createQuery(hql).setParameter("paramUsername", username);
+        List<User> list = query.list();
         return list.isEmpty();
     }
 
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean checkUserAuthen(String email, String password) {
+    public boolean checkUserAuthen(String username, String password) {
         Session session = HibConfig.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        String hql = "FROM UserEntity u where u.email = :paramEmail and  u.password = :paramPassword";
-        Query query = session.createQuery(hql).setParameter("paramEmail", email).setParameter("paramPassword", password);
-        List<UserEntity> list = query.list();
+        String hql = "FROM User u where u.username = :paramUsername and  u.password = :paramPassword";
+        Query query = session.createQuery(hql).setParameter("paramUsername", username).setParameter("paramPassword", password);
+        List<User> list = query.list();
         return !list.isEmpty();
     }
 
@@ -125,20 +116,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean checkAdminAuthen(UserEntity user) {
+    public boolean checkAdminAuthen(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        String hql = "FROM UserEntity u where u.email  like 'admin@sdisc.com' and  u.password  like '123'";
-        List<UserEntity> list = session.createQuery(hql).list();
-        UserEntity user1 = list.get(0);
-        return user1.getEmail().equals(user.getEmail()) && user1.getPassword().equals(user.getPassword());
+        String hql = "FROM User u where u.email  like 'admin@sdisc.com' and  u.password  like '123'";
+        List<User> list = session.createQuery(hql).list();
+        User user1 = list.get(0);
+        return user1.getUsername().equals(user.getUsername()) && user1.getPassword().equals(user.getPassword());
     }
 
     @Override
-    public void blockingUser(long idUser) {
+    public void blockingUser(String username) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        UserEntity user = session.load(UserEntity.class, idUser);
+        User user = session.load(User.class, username);
         String passwordBlocked = Integer.toString((int) (Math.random() * 9999 + 9999));
         user.setPassword(String.join(" blocked ", user.getPassword(), passwordBlocked));
         session.update(user);
@@ -147,10 +138,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void unBlockingUser(long idUser) {
+    public void unBlockingUser(String username) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        UserEntity user = session.load(UserEntity.class, idUser);
+        User user = session.load(User.class, username);
         String[] unblockingPassword = user.getPassword().split(" blocked ");
         user.setPassword(unblockingPassword[0]);
         session.update(user);
@@ -160,13 +151,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean blockingUserCheck(UserEntity user) {
+    public boolean blockingUserCheck(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        String hql = "FROM UserEntity u where u.email = :paramEmail";
-        Query query = session.createQuery(hql).setParameter("paramEmail", user.getEmail());
-        List<UserEntity> list = query.list();
-        UserEntity userBlockingCheck = list.get(0);
+        String hql = "FROM User u where u.email = :paramEmail";
+        Query query = session.createQuery(hql).setParameter("paramEmail", user.getUsername());
+        List<User> list = query.list();
+        User userBlockingCheck = list.get(0);
         return userBlockingCheck.getPassword().contains(" blocked ");
         }
 

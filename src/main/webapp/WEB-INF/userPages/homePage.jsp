@@ -11,7 +11,7 @@
 <body>
 <p style="text-align: right">
     <button><a href="registration"> Регистрация </a></button>
-    <button> <a href="authentication"> Вход </a>  </button>  </p>
+    <button> <a href="authentication_button"> Вход </a>  </button>  </p>
 </p>
 </body>
 

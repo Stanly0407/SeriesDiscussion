@@ -1,6 +1,6 @@
 package service;
 
-import model.UserEntity;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional //Перед исполнением метода помеченного данной аннотацией начинается транзакция, после выполнения метода транзакция коммитится, при выбрасывании RuntimeException откатывается.
-    public void addUser(UserEntity user) {
+    public void addUser(User user) {
         if (user != null) {
             userDao.addUser(user);
         }
@@ -29,69 +29,64 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserEntity user) {
+    public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
     @Override
     @Transactional
-    public void removeUser(long idUser) {
-        userDao.removeUser(idUser);
+    public void removeUser(String username) {
+        userDao.removeUser(username);
     }
 
 
     @Override
     @Transactional
-    public void evictUser(UserEntity user){
+    public void evictUser(User user){
          userDao.evictUser(user);
     }
 
     @Override
-    public boolean blockingUserCheck(UserEntity user) {
+    public boolean blockingUserCheck(User user) {
         return userDao.blockingUserCheck(user);
     }
 
-
     @Override
     @Transactional
-    public UserEntity getUserByID(long idUser) {
-        return userDao.getUserByID(idUser);
+    public User getUserByUsername(String username) {
+        return userDao.getUserByUsername(username);
     }
 
     @Override
     @Transactional
-    public List<UserEntity> listUsers() {
+    public List<User> listUsers() {
         return userDao.listUsers();
     }
 
     @Override
     @Transactional
-    public boolean checkUserReg(String email) {
-        return userDao.checkUserReg(email);
+    public boolean checkUserReg(String username) {
+        return userDao.checkUserReg(username);
     }
 
     @Override
-    public boolean checkUserAuthen(String email, String password) {
-        return userDao.checkUserAuthen(email, password);
-    }
-
-
+    public boolean checkUserAuthen(String username, String password) {
+        return userDao.checkUserAuthen(username, password); }
 
     @Override
-    public boolean checkAdminAuthen(UserEntity user) {
+    public boolean checkAdminAuthen(User user) {
         return userDao.checkAdminAuthen(user);
     }
 
     @Override
-    public void blockingUser(long idUser) {
-         userDao.blockingUser(idUser);
+    public void blockingUser(String username) {
+         userDao.blockingUser(username);
     }
 
     @Override
-    public void unBlockingUser(long idUser) {
-        userDao.unBlockingUser(idUser);
+    public void unBlockingUser(String username) {
+        userDao.unBlockingUser(username);
     }
-
 
 }
 

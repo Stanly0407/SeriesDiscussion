@@ -1,36 +1,33 @@
 package repository;
 
-import model.SeriesEntity;
-import model.UserEntity;
+import model.User;
 
 import java.util.List;
 
 public interface UserDao {
-    void addUser(UserEntity user);
+    void addUser(User user);
 
-    void updateUser(UserEntity user);
+    void updateUser(User user);
 
-    void removeUser(long idUser);
+    void removeUser(String username);
 
-    UserEntity getUserByID(long idUser);
+    User getUserByUsername(String username);
 
-    UserEntity getUserByEmail(String email);
+    List<User> listUsers();
 
-    List<UserEntity> listUsers();
+    boolean checkUserReg(String username);
 
-    boolean checkUserReg(String email);
+    boolean checkUserAuthen(String username, String password);
 
-    boolean checkUserAuthen(String email, String password);
+    boolean checkAdminAuthen(User user);
 
-    boolean checkAdminAuthen(UserEntity user);
+    void blockingUser(String username);
 
-    void blockingUser(long idUser);
+    void unBlockingUser(String username);
 
-    void unBlockingUser(long idUser);
+    void evictUser(User user);
 
-    void evictUser(UserEntity user);
-
-    boolean blockingUserCheck(UserEntity user);
+    boolean blockingUserCheck(User user);
 
 
 }
