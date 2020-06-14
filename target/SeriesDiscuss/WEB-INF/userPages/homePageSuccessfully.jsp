@@ -11,6 +11,7 @@
 <body>
 <p style="text-align: right">
 
+<h2>${message}</h2>
     <security:authorize access="hasRole('ADMIN')">
     <button><a href="adminAccount"> ADMIN </a></button>
     </security:authorize>

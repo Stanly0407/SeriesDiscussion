@@ -21,50 +21,49 @@ import java.util.Set;
 
 @Controller
 public class UsersEntryPointControllers {
-
     SeriesServiceImpl seriesService = new SeriesServiceImpl();
     UserServiceImpl userService = new UserServiceImpl();
 
-//    @PreAuthorize("hasAuthority('USER')")
-    @PostMapping(value = "authentication")
-    public String authenticationOfUser(@ModelAttribute("user") User user, Model model, Principal principal) {
-
-//model.addAttribute("message", "You are logged in as " + principal.getName());
-     //       return "adminPages/adminMainPage";
-//        } else if (userService.blockingUserCheck(user)){
-//            return "userPages/userBlockedInfoPage";
-//        }
-//        else if (userService.checkUserAuthen(user.getEmail(), user.getPassword())) {
-//            return "userPages/homePageSuccessfully";
-//        } else {
-//            return "userPages/authentication";
-            return "/userPages/homePageSuccessfully";
+    @GetMapping("/") //Аннотация используется для маппинга урл-адреса запроса на указанный метод или класс. Запрос можно маппить как на метод класса, так и на целый класс. Допускается указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
+    public String getHomePage(Model model, Principal principal) {
+        model.addAttribute("message", "Hello " + principal.getName());
+        return "userPages/homePageSuccessfully";
     }
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(value = "adminAccount")
-    public String getAdminAccount (@ModelAttribute("user") User user, Model model, Principal principal
-                                      //SecurityContextHolderAwareRequestWrapper request
-    ) {
-        //if (request.isUserInRole("ADMIN")) {
+    public String getAdminAccount (@ModelAttribute("user") User user, Model model, Principal principal) {
         return "adminPages/adminMainPage"; }
 
-    @GetMapping(value = "personalAccount")
-    public String getPersonalAccount (@ModelAttribute("user") User user, Model model, Principal principal
-    //SecurityContextHolderAwareRequestWrapper request
-    ) {
-        //if (request.isUserInRole("ADMIN")) {
-        return "/userPages/homePageSuccessfully"; }
-
-//  //  @PreAuthorize("hasAuthority('USER')")
-//    @GetMapping("/") //Аннотация используется для маппинга урл-адреса запроса на указанный метод или класс. Запрос можно маппить как на метод класса, так и на целый класс. Допускается указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
-//    public String getHomePage() {
-//        return "userPages/homePage";
-//    }
-//
     @GetMapping(value = "authentication_button")
     public String getAuthenticationPage() {
         return "userPages/authentication";
     }
+
+//    @GetMapping(value = "/userPages/authentication")
+//    public String authenticationOfUser(@ModelAttribute("user") User user, Model model, Principal principal) {
+//
+//        return "/userPages/homePageSuccessfully"; }
+
+
+//    }
+//    @PreAuthorize("hasAuthority('USER')")
+
+
+
+
+//
+//    @GetMapping(value = "personalAccount")
+//    public String getPersonalAccount (@ModelAttribute("user") User user, Model model, Principal principal
+//    //SecurityContextHolderAwareRequestWrapper request
+//    ) {
+//        //if (request.isUserInRole("ADMIN")) {
+//        return "/userPages/homePageSuccessfully"; }
+
+
+
+
+
 
 //    @GetMapping(value = "registration")
 //    public String getRegistrationPage() {

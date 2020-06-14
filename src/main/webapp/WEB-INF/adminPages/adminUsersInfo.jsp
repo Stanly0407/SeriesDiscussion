@@ -21,9 +21,9 @@
 <c:if test="${not empty listUsers}">
 <table>
     <tr>
+        <th width="120">Email</th>
         <th width="120">Имя</th>
         <th width="120">Фамилия</th>
-        <th width="120">Email</th>
         <th width="80">Пароль</th>
         <th width="80">Рейтинг</th>
         <th width="80">Дата рождения</th>
@@ -35,18 +35,18 @@
         </tr>
     <c:forEach items="${listUsers}" var="user">
         <tr>
+            <td>${user.username}</td>
             <td>${user.forename}</td>
             <td>${user.surname}</td>
-            <td>${user.email}</td>
-            <td>${user.password}</td>
+             <td>${user.password}</td>
             <td>${user.rateUser}</td>
             <td>${user.birthdate}</td>
             <td>${user.enabled}</td>
-            <td>${user.roles}</td>
+            <td>${user.authorities}</td>
             <form action="admin/UsersInfoList" method="get">
-            <td><a href="<c:url value='/blockingUser/${user.email}'/>">Заблокировать</a></td>
-            <td><a href="<c:url value='/unBlockingUser/${user.email}'/>">Разблокировать</a></td>
-            <td ><a href="<c:url value='/editUser/${user.email}'/>">Редактировать</a></td>
+            <td><a href="<c:url value='/blockingUser/${user.username}'/>">Заблокировать</a></td>
+            <td><a href="<c:url value='/unBlockingUser/${user.username}'/>">Разблокировать</a></td>
+            <td ><a href="<c:url value='/editUser/${user.username}'/>">Редактировать</a></td>
 <%--            <td style="color: red"><a href="<c:url value="/remove/${user.idUser}"/>">Удалить</a></td>--%>
             </form>
         </tr>

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebMvc
 @ComponentScan(basePackages = {"config", "controller", "repository", "model", "service"})
 public class WebConfig  implements WebMvcConfigurer {
@@ -60,10 +60,11 @@ public class WebConfig  implements WebMvcConfigurer {
     // Таким образом, нет необходимости в каком-либо контроллере между ними.
     public void addViewControllers(ViewControllerRegistry registry) {
 //
-//        registry.addViewController("/login").setViewName("login");
+      //  registry.addViewController("/login").setViewName("login");
 
-        registry.addViewController("/").setViewName("userPages/homePage");
-        registry.addViewController("/registration").setViewName("userPages/registration");
+        registry.addViewController("/login").setViewName("userPages/authentication");
+    //    registry.addViewController("/").setViewName("userPages/homePage");
+        registry.addViewController("/registration").setViewName("/userPages/registration");
     }
 }
 
