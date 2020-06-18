@@ -22,24 +22,13 @@ public class UserDaoImpl implements UserDao {
     public void addUser(User user) {
         Session session = HibConfig.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
+
         session.persist(user);
       transaction.commit();
        session.close();
     }
 
 
-//    public boolean saveUser(User user) {
-//        User userFromDB = userRepository.findByUsername(user.getUsername());
-//
-//        if (userFromDB != null) {
-//            return false;
-//        }
-//
-//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        userRepository.save(user);
-//        return true;
-//    }
 
     @Override
     public void updateUser(User user) {
@@ -79,14 +68,13 @@ public class UserDaoImpl implements UserDao {
         transaction.commit();
         session.close();}
 
- //   @Secured(value = {"USER"})
+   @Secured(value = {"USER"})
     @Override
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {
         Session session = HibConfig.getSessionFactory().openSession();
        Transaction transaction = session.beginTransaction();
-//        for (SeriesEntity series: seriesList){
-//             logger.info("Series list: " + series);}
+
         return (List<User>) session.createQuery("from User").list();}
 
     @Override
@@ -100,69 +88,71 @@ public class UserDaoImpl implements UserDao {
         return list.isEmpty();
     }
 
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean checkUserAuthen(String username, String password) {
-        Session session = HibConfig.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "FROM User u where u.username = :paramUsername and  u.password = :paramPassword";
-        Query query = session.createQuery(hql).setParameter("paramUsername", username).setParameter("paramPassword", password);
-        List<User> list = query.list();
-        return !list.isEmpty();
-    }
+}
 
 
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean checkAdminAuthen(User user) {
-        Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "FROM User u where u.email  like 'admin@sdisc.com' and  u.password  like '123'";
-        List<User> list = session.createQuery(hql).list();
-        User user1 = list.get(0);
-        return user1.getUsername().equals(user.getUsername()) && user1.getPassword().equals(user.getPassword());
-    }
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public boolean checkUserAuthen(String username, String password) {
+//        Session session = HibConfig.getSessionFactory().getCurrentSession();
+//        Transaction transaction = session.beginTransaction();
+//        String hql = "FROM User u where u.username = :paramUsername and  u.password = :paramPassword";
+//        Query query = session.createQuery(hql).setParameter("paramUsername", username).setParameter("paramPassword", password);
+//        List<User> list = query.list();
+//        return !list.isEmpty();
+//    }
 
-    @Override
-    public void blockingUser(String username) {
-        Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        User user = session.load(User.class, username);
-        String passwordBlocked = Integer.toString((int) (Math.random() * 9999 + 9999));
-        user.setPassword(String.join(" blocked ", user.getPassword(), passwordBlocked));
-        session.update(user);
-        transaction.commit();
-        session.close();
-    }
+//
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public boolean checkAdminAuthen(User user) {
+//        Session session = HibConfig.getSessionFactory().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        String hql = "FROM User u where u.email  like 'admin@sdisc.com' and  u.password  like '123'";
+//        List<User> list = session.createQuery(hql).list();
+//        User user1 = list.get(0);
+//        return user1.getUsername().equals(user.getUsername()) && user1.getPassword().equals(user.getPassword());
+//    }
+//
+//    @Override
+//    public void blockingUser(String username) {
+//        Session session = HibConfig.getSessionFactory().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        User user = session.load(User.class, username);
+//        String passwordBlocked = Integer.toString((int) (Math.random() * 9999 + 9999));
+//        user.setPassword(String.join(" blocked ", user.getPassword(), passwordBlocked));
+//        session.update(user);
+//        transaction.commit();
+//        session.close();
+//    }
+//
+//    @Override
+//    public void unBlockingUser(String username) {
+//        Session session = HibConfig.getSessionFactory().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        User user = session.load(User.class, username);
+//        String[] unblockingPassword = user.getPassword().split(" blocked ");
+//        user.setPassword(unblockingPassword[0]);
+//        session.update(user);
+//        transaction.commit();
+//        session.close();
+//    }
+//
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public boolean blockingUserCheck(User user) {
+//        Session session = HibConfig.getSessionFactory().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        String hql = "FROM User u where u.email = :paramEmail";
+//        Query query = session.createQuery(hql).setParameter("paramEmail", user.getUsername());
+//        List<User> list = query.list();
+//        User userBlockingCheck = list.get(0);
+//        return userBlockingCheck.getPassword().contains(" blocked ");
+//        }
 
-    @Override
-    public void unBlockingUser(String username) {
-        Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        User user = session.load(User.class, username);
-        String[] unblockingPassword = user.getPassword().split(" blocked ");
-        user.setPassword(unblockingPassword[0]);
-        session.update(user);
-        transaction.commit();
-        session.close();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean blockingUserCheck(User user) {
-        Session session = HibConfig.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "FROM User u where u.email = :paramEmail";
-        Query query = session.createQuery(hql).setParameter("paramEmail", user.getUsername());
-        List<User> list = query.list();
-        User userBlockingCheck = list.get(0);
-        return userBlockingCheck.getPassword().contains(" blocked ");
-        }
 
 
-    }
 
 
 

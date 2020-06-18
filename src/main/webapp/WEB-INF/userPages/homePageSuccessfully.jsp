@@ -10,7 +10,7 @@
 </head>
 <body>
 <p style="text-align: right">
-
+<p style="text-align: center;"><a href="${pageContext.request.contextPath}/registration">Registration </a></p>
 <h2>${message}</h2>
     <security:authorize access="hasRole('ADMIN')">
     <button><a href="adminAccount"> ADMIN </a></button>

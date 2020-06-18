@@ -15,19 +15,13 @@ public interface UserDao {
 
     List<User> listUsers();
 
+    void evictUser(User user);
     boolean checkUserReg(String username);
 
-    boolean checkUserAuthen(String username, String password);
-
-    boolean checkAdminAuthen(User user);
-
-    void blockingUser(String username);
-
-    void unBlockingUser(String username);
-
-    void evictUser(User user);
-
-    boolean blockingUserCheck(User user);
-
+//    boolean checkUserAuthen(String username, String password);
+//    boolean checkAdminAuthen(User user);
+//    boolean blockingUserCheck(User user);
+//    void blockingUser(String username);
+//    void unBlockingUser(String username);
 
 }

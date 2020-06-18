@@ -20,7 +20,7 @@
     <img src="<spring:url value="../images/lion.png"/>">
 <hr style="border-width: 3px;">
 <h2>${message}</h2>
-<form action="admin/UsersInfoList" method="get">
+<form action="adminUsersInfoList" method="get">
     <p style="text-align: left;">
         <button style="vertical-align: middle; font-weight: bold;  size: 9px; background-color: lightcyan"> Список пользователей </button>
     </p>

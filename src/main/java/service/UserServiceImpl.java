@@ -1,17 +1,22 @@
 package service;
 
+import model.Authorities;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 import repository.UserDao;
 import repository.UserDaoImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service //чтобы объявить, что этот класс представляет сервис – компонент сервис-слоя. Сервис является подтипом класса @Component. Использование данной аннотации позволит искать бины-сервисы автоматически (смотрите далее в root-context.xml).
 public class UserServiceImpl implements UserService {
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private Validator validator;
@@ -23,10 +28,23 @@ public class UserServiceImpl implements UserService {
     @Transactional //Перед исполнением метода помеченного данной аннотацией начинается транзакция, после выполнения метода транзакция коммитится, при выбрасывании RuntimeException откатывается.
     public void addUser(User user) {
         if (user != null) {
-            userDao.addUser(user);
+            user.setAuthorities(Collections.singleton(new Authorities("ROLE_USER", user)));
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+             userDao.addUser(user);
         }
     }
-
+    //    public boolean saveUser(User user) {
+//        User userFromDB = userRepository.findByUsername(user.getUsername());
+//
+//        if (userFromDB != null) {
+//            return false;
+//        }
+//
+//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        userRepository.save(user);
+//        return true;
+//    }
     @Override
     @Transactional
     public void updateUser(User user) {
@@ -46,10 +64,6 @@ public class UserServiceImpl implements UserService {
          userDao.evictUser(user);
     }
 
-    @Override
-    public boolean blockingUserCheck(User user) {
-        return userDao.blockingUserCheck(user);
-    }
 
     @Override
     @Transactional
@@ -69,24 +83,6 @@ public class UserServiceImpl implements UserService {
         return userDao.checkUserReg(username);
     }
 
-    @Override
-    public boolean checkUserAuthen(String username, String password) {
-        return userDao.checkUserAuthen(username, password); }
-
-    @Override
-    public boolean checkAdminAuthen(User user) {
-        return userDao.checkAdminAuthen(user);
-    }
-
-    @Override
-    public void blockingUser(String username) {
-         userDao.blockingUser(username);
-    }
-
-    @Override
-    public void unBlockingUser(String username) {
-        userDao.unBlockingUser(username);
-    }
 
 }
 

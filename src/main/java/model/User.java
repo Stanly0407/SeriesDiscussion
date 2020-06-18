@@ -1,7 +1,9 @@
 package model;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.util.Set;
 @Entity //Класс представляет объект, который нужно долговременно хранить. поля класса имеют отображение в БД
 @Table(name = "users", schema = "seriesdiscuss")
 public class User implements Serializable {
+
+
 
     @Id
     @Column(name = "username", nullable = false, length = 255)
@@ -35,7 +39,7 @@ public class User implements Serializable {
     private LocalDate birthdate;
 
     @Column(name = "enabled")
-    private boolean enabled;
+    private boolean enabled = true            ;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Authorities> authorities = new HashSet<>();
@@ -68,8 +72,8 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
+        this.password =                // passwordEncoder.encode(
+                        password;}
 
     public String getForename() {
         return forename;

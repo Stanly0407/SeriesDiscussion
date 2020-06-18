@@ -21,49 +21,16 @@ public class WebAppInitialiser extends AbstractAnnotationConfigDispatcherServlet
         return new String[]{"/"};
     }
 
+
     @Override //без этого фильтра в БД сохраняется из представления данные на русском языке странными неопределенными символами
     protected CharacterEncodingFilter[] getServletFilters() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         return new CharacterEncodingFilter[] { characterEncodingFilter};
     }
-//    @Override
-//    public void onStartup(ServletContext servletContext) throws ServletException {
-//        servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
-//        servletContext.getSessionCookieConfig().setHttpOnly(true); //Безопасный сеанс Cookie
-//        servletContext.getSessionCookieConfig().setSecure(true); //Безопасный сеанс Cookie https://www.baeldung.com/spring-security-session
-//    }
-//    @Override
-//    public void onStartup(ServletContext sc) throws ServletException {
-//        // ... для защиты нашего сеансового куки
-//        sc.getSessionCookieConfig().setHttpOnly(true);
-//        sc.getSessionCookieConfig().setSecure(true);
-//    }
-
-//    @Override
-//    protected void registerDispatcherServlet(ServletContext servletContext) {
-//        super.registerDispatcherServlet(servletContext);
-//        servletContext.addListener(new Session.SessionEventListener() {
-//            @Override
-//            public void handleNormalClose() {
-//
-//            }
-//
-//            @Override
-//            public void handleReconnect() {
-//
-//            }
-//
-//            @Override
-//            public void handleCleanup(Throwable throwable) {
-//
-//            }
-//        });}
-
 
 }
 
-//Теперь, так как  хотим использовать класс вместо web.xml
-// нужно создать WebAppInitialiser
-// который  унаследуем от AbstractAnnotationConfigDispatcherServletInitializer.
-// В нем есть три метода, которые нужно имплементировать и добавить в них классы настроек
+
+
+//чтобы использовать класс вместо web.xml нужно создать WebAppInitialiser кот.  унаслед. от AbstractAnnotationConfigDispatcherServletInitializer.

@@ -19,16 +19,17 @@
 
 <hr style="border-width: 3px;">
 
-<form action="newRegistration" method="post">
+<form action='<spring:url value="/newRegistration"/>' method="post">
+    <p style="text-align: center;"> <b style="font-style: oblique; color: darkblue"> Email:</b> <br>
+        <input type="email" size="40" name="username" title="Поле должно быть заполнено" required>
+    </p>
     <p style="text-align: center;"> <b style="font-style: oblique; color: darkblue"> Имя:</b> <br>
         <input type="text" size="40" name="forename" title="Поле должно быть заполнено" required>
     </p>
     <p style="text-align: center;"> <b style="font-style: oblique; color: darkblue"> Фамилия:</b> <br>
         <input type="text" size="40" name="surname" title="Поле должно быть заполнено" required>
     </p>
-    <p style="text-align: center;"> <b style="font-style: oblique; color: darkblue"> Email:</b> <br>
-        <input type="email" size="40" name="email" title="Поле должно быть заполнено" required>
-    </p>
+
     <p style="text-align: center;"><b style="font-style: italic ; color: darkblue">Пароль</b><br>
         <input type="password" size="40" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                title="Должен содержать не менее одной цифры и

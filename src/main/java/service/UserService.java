@@ -17,15 +17,8 @@ public interface UserService {
 
     boolean checkUserReg(String username);
 
-    boolean checkUserAuthen(String username, String password);
-
-    boolean checkAdminAuthen(User user);
-
-    void blockingUser(String username);
-
-    void unBlockingUser(String username);
 
     void evictUser(User user);
 
-    boolean blockingUserCheck(User user);
+
 }

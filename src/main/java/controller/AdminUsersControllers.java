@@ -23,7 +23,7 @@ public class AdminUsersControllers {
     }
 
 
-    @GetMapping(value = "admin/UsersInfoList")
+    @GetMapping(value = "adminUsersInfoList")
     public String listUsers(Model model) {         // button "Список пользователей"
         System.out.println(userService.listUsers());
         model.addAttribute("user", new User());
@@ -40,21 +40,7 @@ public class AdminUsersControllers {
         return "adminPages/adminUsersInfo";
     }
 
-    @GetMapping("/blockingUser/{email}")
-    public String blockingUser(@PathVariable("email") String username, Model model) {
-        userService.blockingUser(username);
-        model.addAttribute("user", new User());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-    }
-
-    @GetMapping("/unBlockingUser/{idUser}")
-    public String unBlockingUser(@PathVariable("idUser") String username, Model model) {
-        userService.unBlockingUser(username);
-        model.addAttribute("user", new User());
-        model.addAttribute("listUsers", userService.listUsers());
-        return "adminPages/adminUsersInfo";
-    }
+//
 
     @RequestMapping("editUser/{idUser}")
     public String editUser(@PathVariable("idUser") String username, Model model) { // Аннотация, которая показывает, что параметр метода должен быть связан с переменной из урл-адреса.
@@ -77,3 +63,21 @@ public class AdminUsersControllers {
         return "adminPages/adminUsersInfo";
     }
 }
+
+
+
+//@GetMapping("/blockingUser/{email}")
+//    public String blockingUser(@PathVariable("email") String username, Model model) {
+//        userService.blockingUser(username);
+//        model.addAttribute("user", new User());
+//        model.addAttribute("listUsers", userService.listUsers());
+//        return "adminPages/adminUsersInfo";
+//    }
+//
+//    @GetMapping("/unBlockingUser/{idUser}")
+//    public String unBlockingUser(@PathVariable("idUser") String username, Model model) {
+//        userService.unBlockingUser(username);
+//        model.addAttribute("user", new User());
+//        model.addAttribute("listUsers", userService.listUsers());
+//        return "adminPages/adminUsersInfo";
+//    }
